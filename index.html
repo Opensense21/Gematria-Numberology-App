@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARITHMOS HO THEOS — "Numbers Are God" | GematriaCalculator.us Suite, Isopsephy & Sacred Numerology</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="sacred-header">
+    <div class="sacred-subtitle-top">Ἀριθμός ἐστιν ὁ Θεός • מספר הוא אלוהים • ПАНТА АРІΘΜΟΣ</div>
+    <h1 class="sacred-title">ARITHMOS HO THEOS — “NUMBERS ARE GOD”</h1>
+    <p class="sacred-motto">
+      Complete <strong>GematriaCalculator.us 28-Cipher Suite</strong> (English Ordinal, Full Reduction, Reverse Ordinal,
+      Reverse Reduction, Jewish, Satanic, Septenary, Chaldean, Baconian, AQ, Trigonal, Primes) united with
+      <strong>Hebrew Kabbalah</strong>, <strong>Greek Isopsephy</strong>, <strong>Pythagorean Arithmology</strong>,
+      <strong>Biblical Symbolism</strong>, <strong>Astrological Kameas</strong>, and <strong>Druidic Ogham Wisdom</strong>.
+    </p>
+  </header>
+
+  <main class="container">
+    <!-- Input Console -->
+    <section class="cipher-console">
+      <div class="input-row">
+        <div class="cipher-input-wrapper">
+          <input
+            id="wordInput"
+            type="text"
+            class="cipher-input"
+            value="Numbers Are God"
+            placeholder="Enter any name, word, verse, or phrase (English, Hebrew א-ת, or Greek Α-Ω)..."
+            aria-label="Word or Name to Cipher"
+          />
+        </div>
+        <div class="cipher-input-wrapper" style="max-width: 340px;">
+          <input
+            id="compareInput"
+            type="text"
+            class="cipher-input"
+            value=""
+            placeholder="Optional: Compare with 2nd word/name..."
+            aria-label="Second Word for Harmonic Synastry"
+          />
+        </div>
+        <button id="cipherBtn" class="btn-primary">Cipher &amp; Reveal</button>
+      </div>
+
+      <div class="presets-bar">
+        <span class="presets-label">Sacred Presets:</span>
+        <button class="btn-secondary preset-btn" data-val="Numbers Are God">Numbers Are God</button>
+        <button class="btn-secondary preset-btn" data-val="Jesus">Jesus (74 / 444)</button>
+        <button class="btn-secondary preset-btn" data-val="יהוה">יהוה (YHVH = 26)</button>
+        <button class="btn-secondary preset-btn" data-val="ΛΟΓΟΣ">ΛΟΓΟΣ (Logos = 373)</button>
+        <button class="btn-secondary preset-btn" data-val="ΙΗΣΟΥΣ">ΙΗΣΟΥΣ (Jesus = 888)</button>
+        <button class="btn-secondary preset-btn" data-val="אמת">אמת (Emet / Truth = 441)</button>
+        <button class="btn-secondary preset-btn" data-val="ΑΒΡΑΣΑΞ">ΑΒΡΑΣΑΞ (Abrasax = 365)</button>
+        <button class="btn-secondary preset-btn" data-val="Awen">Awen (Druidic Spirit)</button>
+        <button class="btn-secondary preset-btn" data-val="Pythagoras">Pythagoras</button>
+      </div>
+    </section>
+
+    <!-- Multi-Script Transliteration Banner -->
+    <section id="scriptsBanner" class="scripts-banner"></section>
+
+    <!-- Primary 8 Spotlight Cipher Cards (4 Base GematriaCalculator.us + Jewish + Satanic + Hebrew + Greek) -->
+    <section id="kpiGrid" class="kpi-grid"></section>
+
+    <!-- Optional Synastry Comparison Banner -->
+    <section id="synastrySection" style="display: none;"></section>
+
+    <!-- Tradition Navigation Tabs -->
+    <nav class="tabs-nav" role="tablist">
+      <button class="tab-btn active" data-tab="tab-ciphers">1. All 28 Gematria Ciphers (GematriaCalculator.us)</button>
+      <button class="tab-btn" data-tab="tab-synthesis">2. Universal Synthesis</button>
+      <button class="tab-btn" data-tab="tab-kabbalah">3. Jewish Gematria &amp; Kabbalah</button>
+      <button class="tab-btn" data-tab="tab-biblical">4. Biblical Numerology</button>
+      <button class="tab-btn" data-tab="tab-greek">5. Greek Isopsephy &amp; Pythagorean</button>
+      <button class="tab-btn" data-tab="tab-astrology">6. Astrology &amp; Planetary Kameas</button>
+      <button class="tab-btn" data-tab="tab-druids">7. Druidic Ogham &amp; Triads</button>
+      <button class="tab-btn" data-tab="tab-letters">8. Letter-by-Letter Matrix</button>
+    </nav>
+
+    <!-- TAB 1: All 28 GematriaCalculator.us Ciphers + Interactive Cipher Key Inspector -->
+    <section id="tab-ciphers" class="tradition-panel active">
+      <div id="cipherInspector" class="cipher-inspector"></div>
+
+      <div class="sacred-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem; margin-bottom:0.5rem;">
+          <h3 style="margin-bottom:0;">GematriaCalculator.us 28-Cipher Matrix <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">(Click any cipher card to inspect its equation &amp; A–Z key)</span></h3>
+          <div id="cipherCatBar" style="display:flex; flex-wrap:wrap; gap:0.4rem;">
+            <button class="btn-secondary active-filter cat-btn" data-cat="ALL">All 28 Ciphers</button>
+            <button class="btn-secondary cat-btn" data-cat="Base & Reduction">Base &amp; Reduction (9)</button>
+            <button class="btn-secondary cat-btn" data-cat="Jewish & Kabbalah">Jewish &amp; Kabbalah (7)</button>
+            <button class="btn-secondary cat-btn" data-cat="Esoteric & Baconian">Esoteric, Satanic &amp; Baconian (8)</button>
+            <button class="btn-secondary cat-btn" data-cat="Mathematical">Mathematical Sequences (4)</button>
+          </div>
+        </div>
+        <div id="gcSuiteGrid" class="gc-suite-grid"></div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Universal Synthesis -->
+    <section id="tab-synthesis" class="tradition-panel"></section>
+
+    <!-- TAB 3: Jewish Gematria & Kabbalah -->
+    <section id="tab-kabbalah" class="tradition-panel"></section>
+
+    <!-- TAB 4: Biblical Numerology -->
+    <section id="tab-biblical" class="tradition-panel"></section>
+
+    <!-- TAB 5: Greek Isopsephy & Pythagorean -->
+    <section id="tab-greek" class="tradition-panel"></section>
+
+    <!-- TAB 6: Astrology & Planetary Kameas -->
+    <section id="tab-astrology" class="tradition-panel"></section>
+
+    <!-- TAB 7: Druidic Ogham & Triads -->
+    <section id="tab-druids" class="tradition-panel"></section>
+
+    <!-- TAB 8: Letter-by-Letter Matrix -->
+    <section id="tab-letters" class="tradition-panel"></section>
+  </main>
+
+  <script src="knowledge.js"></script>
+  <script src="app.js"></script>
+  <script>
+    (function () {
+      const wordInput = document.getElementById('wordInput');
+      const compareInput = document.getElementById('compareInput');
+      const cipherBtn = document.getElementById('cipherBtn');
+
+      let selectedCipherId = 'english_ordinal';
+      let selectedCategory = 'ALL';
+
+      function generateMagicSquare(n) {
+        if (n === 3) return [[4, 9, 2], [3, 5, 7], [8, 1, 6]];
+        if (n === 4) return [
+          [4, 14, 15, 1],
+          [9, 7, 6, 12],
+          [5, 11, 10, 8],
+          [16, 2, 3, 13]
+        ];
+        if (n % 2 === 1) {
+          const sq = Array.from({ length: n }, () => Array(n).fill(0));
+          let i = 0, j = Math.floor(n / 2);
+          for (let num = 1; num <= n * n; num++) {
+            sq[i][j] = num;
+            const ni = (i - 1 + n) % n;
+            const nj = (j + 1) % n;
+            if (sq[ni][nj] !== 0) {
+              i = (i + 1) % n;
+            } else {
+              i = ni;
+              j = nj;
+            }
+          }
+          return sq;
+        }
+        if (n === 6) return [
+          [6, 32, 3, 34, 35, 1],
+          [7, 11, 27, 28, 8, 30],
+          [19, 14, 16, 15, 23, 24],
+          [18, 20, 22, 21, 17, 13],
+          [25, 29, 10, 9, 26, 12],
+          [36, 5, 33, 4, 2, 31]
+        ];
+        if (n === 8) {
+          const sq = Array.from({ length: 8 }, () => Array(8).fill(0));
+          for (let r = 0; r < 8; r++) {
+            for (let c = 0; c < 8; c++) {
+              const inDiag = (r % 4 === c % 4) || ((r % 4) + (c % 4) === 3);
+              sq[r][c] = inDiag ? 64 - (r * 8 + c) : (r * 8 + c + 1);
+            }
+          }
+          return sq;
+        }
+        return [[4, 9, 2], [3, 5, 7], [8, 1, 6]];
+      }
+
+      function buildTetractysSVG(activeRow, monadRoot) {
+        const rows = [
+          [{ x: 160, y: 38 }],
+          [{ x: 130, y: 88 }, { x: 190, y: 88 }],
+          [{ x: 100, y: 138 }, { x: 160, y: 138 }, { x: 220, y: 138 }],
+          [{ x: 70, y: 188 }, { x: 130, y: 188 }, { x: 190, y: 188 }, { x: 250, y: 188 }]
+        ];
+        let dots = '';
+        let pointCounter = 0;
+        rows.forEach((r, rIdx) => {
+          const isRowActive = (rIdx + 1) === activeRow;
+          r.forEach(pt => {
+            pointCounter++;
+            const isPointActive = pointCounter === monadRoot;
+            const fill = isPointActive ? '#fde047' : (isRowActive ? '#eab308' : '#334155');
+            const radius = isPointActive ? 13 : (isRowActive ? 10 : 8);
+            const stroke = isPointActive ? '#ffffff' : '#eab308';
+            dots += `<circle cx="${pt.x}" cy="${pt.y}" r="${radius}" fill="${fill}" stroke="${stroke}" stroke-width="2" />`;
+            dots += `<text x="${pt.x}" y="${pt.y + 4}" text-anchor="middle" fill="${isPointActive || isRowActive ? '#090d16' : '#cbd5e1'}" font-size="10" font-weight="bold">${pointCounter}</text>`;
+          });
+        });
+        return `
+          <svg viewBox="0 0 320 230" width="100%" style="max-width:340px; display:block; margin:0 auto;">
+            <polygon points="160,16 40,206 280,206" fill="rgba(234,179,8,0.05)" stroke="rgba(234,179,8,0.4)" stroke-width="1.5"/>
+            ${dots}
+          </svg>
+        `;
+      }
+
+      function buildSefirotSVG(activeSefiraIndex) {
+        const nodes = [
+          { id: 1, name: 'Keter', heb: 'כתר', x: 150, y: 28 },
+          { id: 2, name: 'Chokhmah', heb: 'חכמה', x: 235, y: 68 },
+          { id: 3, name: 'Binah', heb: 'בינה', x: 65, y: 68 },
+          { id: 4, name: 'Chesed', heb: 'חסד', x: 235, y: 130 },
+          { id: 5, name: 'Gevurah', heb: 'גבורה', x: 65, y: 130 },
+          { id: 6, name: 'Tiferet', heb: 'תפארת', x: 150, y: 162 },
+          { id: 7, name: 'Netzach', heb: 'נצח', x: 235, y: 205 },
+          { id: 8, name: 'Hod', heb: 'הוד', x: 65, y: 205 },
+          { id: 9, name: 'Yesod', heb: 'יסוד', x: 150, y: 242 },
+          { id: 10, name: 'Malkhut', heb: 'מלכות', x: 150, y: 292 }
+        ];
+        const links = [
+          [1,2],[1,3],[1,6],[2,3],[2,4],[2,6],[3,5],[3,6],
+          [4,5],[4,6],[4,7],[5,6],[5,8],[6,7],[6,8],[6,9],
+          [7,8],[7,9],[7,10],[8,9],[8,10],[9,10]
+        ];
+        let linesSvg = '';
+        links.forEach(([a, b]) => {
+          const na = nodes[a - 1], nb = nodes[b - 1];
+          linesSvg += `<line x1="${na.x}" y1="${na.y}" x2="${nb.x}" y2="${nb.y}" stroke="rgba(234,179,8,0.3)" stroke-width="1.5" />`;
+        });
+        let nodesSvg = '';
+        nodes.forEach(n => {
+          const active = n.id === activeSefiraIndex;
+          nodesSvg += `
+            <circle cx="${n.x}" cy="${n.y}" r="${active ? 19 : 15}" fill="${active ? '#eab308' : '#161f33'}" stroke="${active ? '#fef08a' : '#eab308'}" stroke-width="${active ? 3 : 1.5}" />
+            <text x="${n.x}" y="${n.y + 4}" text-anchor="middle" fill="${active ? '#090d16' : '#fde047'}" font-size="10" font-weight="bold">${n.heb}</text>
+          `;
+        });
+        return `
+          <svg viewBox="0 0 300 325" width="100%" style="max-width:300px; display:block; margin:0 auto;">
+            ${linesSvg}
+            ${nodesSvg}
+          </svg>
+        `;
+      }
+
+      function renderCipherInspector(res) {
+        const cObj = res.gematriaSuite[selectedCipherId] || res.gematriaSuite['english_ordinal'];
+        if (!cObj) return;
+
+        const chipsHtml = cObj.breakdown.map((b, idx) => `
+          <div class="letter-chip">
+            <div class="letter-chip-char">${b.char}</div>
+            <div class="letter-chip-val">${b.val}</div>
+          </div>
+          ${idx < cObj.breakdown.length - 1 ? '<span style="color:var(--text-muted); font-weight:bold;">+</span>' : ''}
+        `).join('');
+
+        const isCaseSensitive = cObj.id.includes('bacon');
+        const azCellsHtml = cObj.chartAZ.map(cell => `
+          <div class="az-cell">
+            <div class="az-cell-letter">${isCaseSensitive ? `${cell.letter.toLowerCase()} / ${cell.letter}` : cell.letter}</div>
+            <div class="az-cell-num">${isCaseSensitive ? `${cell.val} / ${cell.upperVal}` : cell.val}</div>
+          </div>
+        `).join('');
+
+        document.getElementById('cipherInspector').innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
+            <div>
+              <span class="badge" style="border-color:${cObj.color}; color:${cObj.color};">${cObj.category}</span>
+              <h3 style="margin-top:0.4rem; color:${cObj.color}; font-size:1.4rem;">
+                “${res.input}” = <strong>${cObj.total}</strong> in <em>${cObj.name}</em>
+              </h3>
+              <p style="font-size:0.88rem; color:var(--text-secondary); margin-bottom:0.2rem;">${cObj.desc}</p>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:0.75rem; text-transform:uppercase; color:var(--text-muted);">Single-Digit Root</div>
+              <div style="font-size:1.85rem; font-weight:800; color:var(--gold-bright); font-family:Georgia,serif;">${cObj.reduced}</div>
+            </div>
+          </div>
+
+          <div class="letter-chip-row">
+            ${chipsHtml}
+            <span style="color:var(--gold-bright); font-weight:800; font-size:1.2rem; margin-left:0.35rem;">= ${cObj.total}</span>
+          </div>
+
+          <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-muted); margin-top:0.5rem;">
+            ${cObj.name} — Complete A–Z Cipher Key Table:
+          </div>
+          <div class="az-grid">
+            ${azCellsHtml}
+          </div>
+        `;
+      }
+
+      function renderSuiteGrid(res) {
+        const list = Object.values(res.gematriaSuite).filter(c =>
+          selectedCategory === 'ALL' || c.category === selectedCategory
+        );
+
+        document.getElementById('gcSuiteGrid').innerHTML = list.map(c => `
+          <div class="gc-cipher-card ${c.id === selectedCipherId ? 'selected-cipher' : ''}"
+               style="border-top-color: ${c.color};"
+               data-cid="${c.id}">
+            <div class="gc-cipher-title" style="color: ${c.color};">${c.name}</div>
+            <div class="gc-cipher-val">${c.total}</div>
+            <div class="gc-cipher-meta">Root: <strong>${c.reduced}</strong> • ${c.category}</div>
+          </div>
+        `).join('');
+
+        document.querySelectorAll('.gc-cipher-card').forEach(card => {
+          card.addEventListener('click', () => {
+            selectedCipherId = card.getAttribute('data-cid');
+            renderCipherInspector(res);
+            renderSuiteGrid(res);
+          });
+        });
+      }
+
+      function renderAll() {
+        const res = window.cipherText(wordInput.value || 'Numbers Are God');
+        if (!res) return;
+
+        // 1. Render Scripts Banner
+        document.getElementById('scriptsBanner').innerHTML = `
+          <div class="script-pill">
+            <div class="script-pill-label">Hebrew Transliteration (כתיב עברי)</div>
+            <div class="script-pill-value" dir="rtl">${res.scripts.hebrew}</div>
+          </div>
+          <div class="script-pill">
+            <div class="script-pill-label">Atbash Mirror Cipher (אתב"ש)</div>
+            <div class="script-pill-value" dir="rtl">${res.scripts.atbash} <span style="font-size:0.9rem;color:#94a3b8;">(= ${res.ciphers.atbashTotal})</span></div>
+          </div>
+          <div class="script-pill">
+            <div class="script-pill-label">Greek Isopsephic Script (Ἑλληνικά)</div>
+            <div class="script-pill-value">${res.scripts.greek}</div>
+          </div>
+          <div class="script-pill">
+            <div class="script-pill-label">Druidic Ogham Stave (Beith-Luis-Nin)</div>
+            <div class="script-pill-value">${res.scripts.ogham}</div>
+          </div>
+        `;
+
+        // 2. Render Primary 8 Spotlight Cards (4 Classic GematriaCalculator.us + Jewish + Satanic + Hebrew + Greek)
+        document.getElementById('kpiGrid').innerHTML = `
+          <div class="kpi-card highlight" data-jump-cipher="english_ordinal" style="border-top: 3px solid #eab308;">
+            <div class="kpi-tradition" style="color:#eab308;">Base Cipher 1</div>
+            <div class="kpi-name">English Ordinal</div>
+            <div class="kpi-number">${res.ciphers.engOrdinal}</div>
+            <div class="kpi-sub">A=1 ... Z=26 • Sumerian: <strong>${res.ciphers.sumerian}</strong></div>
+          </div>
+          <div class="kpi-card highlight" data-jump-cipher="full_reduction" style="border-top: 3px solid #38bdf8;">
+            <div class="kpi-tradition" style="color:#38bdf8;">Base Cipher 2</div>
+            <div class="kpi-name">Full Reduction</div>
+            <div class="kpi-number">${res.ciphers.fullReduction}</div>
+            <div class="kpi-sub">Pythagorean Root: <strong>${res.ciphers.pythDestiny.value}</strong></div>
+          </div>
+          <div class="kpi-card highlight" data-jump-cipher="reverse_ordinal" style="border-top: 3px solid #a855f7;">
+            <div class="kpi-tradition" style="color:#a855f7;">Base Cipher 3</div>
+            <div class="kpi-name">Reverse Ordinal</div>
+            <div class="kpi-number">${res.ciphers.engRevOrdinal}</div>
+            <div class="kpi-sub">Z=1 ... A=26 • Rev Sum: <strong>${res.ciphers.engRevOrdinal * 6}</strong></div>
+          </div>
+          <div class="kpi-card highlight" data-jump-cipher="reverse_full_reduction" style="border-top: 3px solid #34d399;">
+            <div class="kpi-tradition" style="color:#34d399;">Base Cipher 4</div>
+            <div class="kpi-name">Rev Full Reduction</div>
+            <div class="kpi-number">${res.ciphers.revFullReduction}</div>
+            <div class="kpi-sub">Reverse Pythagorean (1–9)</div>
+          </div>
+          <div class="kpi-card" data-jump-cipher="jewish" style="border-top: 3px solid #f59e0b;">
+            <div class="kpi-tradition" style="color:#f59e0b;">Agrippa Latin</div>
+            <div class="kpi-name">Jewish Gematria</div>
+            <div class="kpi-number">${res.ciphers.agrippa}</div>
+            <div class="kpi-sub">Extended: <strong>${res.ciphers.engStandard}</strong> • AQ: <strong>${res.gematriaSuite.alphanumeric_qabbalah.total}</strong></div>
+          </div>
+          <div class="kpi-card" data-jump-cipher="satanic" style="border-top: 3px solid #f43f5e;">
+            <div class="kpi-tradition" style="color:#f43f5e;">Esoteric</div>
+            <div class="kpi-name">Satanic / Septenary</div>
+            <div class="kpi-number">${res.ciphers.satanic} / ${res.ciphers.septenary}</div>
+            <div class="kpi-sub">A=36..Z=61 • Septenary (1–7)</div>
+          </div>
+          <div class="kpi-card" data-jump-tab="tab-kabbalah" style="border-top: 3px solid #fde047;">
+            <div class="kpi-tradition" style="color:#fde047;">Biblical Hebrew</div>
+            <div class="kpi-name">Mispar Hechrachi</div>
+            <div class="kpi-number">${res.ciphers.hechrachi}</div>
+            <div class="kpi-sub">Gadol (Sofit): <strong>${res.ciphers.gadol}</strong></div>
+          </div>
+          <div class="kpi-card" data-jump-tab="tab-greek" style="border-top: 3px solid #60a5fa;">
+            <div class="kpi-tradition" style="color:#60a5fa;">Ancient Greek</div>
+            <div class="kpi-name">Greek Isopsephy</div>
+            <div class="kpi-number">${res.ciphers.isopsephy}</div>
+            <div class="kpi-sub">Chaldean: <strong>${res.ciphers.chaldCompound}</strong></div>
+          </div>
+        `;
+
+        // Allow clicking top KPI cards to inspect that cipher
+        document.querySelectorAll('[data-jump-cipher]').forEach(el => {
+          el.addEventListener('click', () => {
+            selectedCipherId = el.getAttribute('data-jump-cipher');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tradition-panel').forEach(p => p.classList.remove('active'));
+            document.querySelector('[data-tab="tab-ciphers"]').classList.add('active');
+            document.getElementById('tab-ciphers').classList.add('active');
+            renderCipherInspector(res);
+            renderSuiteGrid(res);
+          });
+        });
+
+        // Render Tab 1 (28-Cipher Suite + Inspector)
+        renderCipherInspector(res);
+        renderSuiteGrid(res);
+
+        // 3. Optional Synastry Comparison
+        const synSection = document.getElementById('synastrySection');
+        const compText = (compareInput.value || '').trim();
+        if (compText) {
+          const compRes = window.cipherText(compText);
+          if (compRes) {
+            const combinedGematria = res.ciphers.hechrachi + compRes.ciphers.hechrachi;
+            const combinedRoot = window.digitalRoot(combinedGematria);
+            const combinedDecad = window.SACRED_KNOWLEDGE.pythagoreanDecad[combinedRoot];
+            synSection.style.display = 'block';
+            synSection.innerHTML = `
+              <div class="sacred-card" style="border-color: var(--gold-primary);">
+                <h3>Harmonic Synastry &amp; Cipher Comparison: “${res.input}” vs. “${compRes.input}”</h3>
+                <p>
+                  • <strong>English Ordinal:</strong> ${res.ciphers.engOrdinal} vs. ${compRes.ciphers.engOrdinal} (Sum = <strong>${res.ciphers.engOrdinal + compRes.ciphers.engOrdinal}</strong>) •
+                  <strong>Full Reduction:</strong> ${res.ciphers.fullReduction} vs. ${compRes.ciphers.fullReduction} •
+                  <strong>Reverse Ordinal:</strong> ${res.ciphers.engRevOrdinal} vs. ${compRes.ciphers.engRevOrdinal} •
+                  <strong>Reverse Reduction:</strong> ${res.ciphers.revFullReduction} vs. ${compRes.ciphers.revFullReduction}
+                </p>
+                <p>
+                  • <strong>Jewish (Agrippa):</strong> ${res.ciphers.agrippa} vs. ${compRes.ciphers.agrippa} •
+                  <strong>Satanic:</strong> ${res.ciphers.satanic} vs. ${compRes.ciphers.satanic} •
+                  <strong>Hebrew Hechrachi:</strong> ${res.ciphers.hechrachi} + ${compRes.ciphers.hechrachi} = <strong>${combinedGematria}</strong> (Monad <strong>${combinedRoot}</strong> — <em>${combinedDecad.title}</em>).
+                </p>
+              </div>
+            `;
+          }
+        } else {
+          synSection.style.display = 'none';
+        }
+
+        const d = res.archetypes.decad;
+        const m = res.archetypes.monadDecad;
+
+        // 4. TAB 2: Universal Synthesis ("Numbers Are God")
+        const matchesHtml = res.exactMatches.length > 0
+          ? res.exactMatches.map(item => `
+              <div class="concordance-item">
+                <div class="concordance-header">
+                  <strong>${item.word}</strong>
+                  <span class="concordance-num">= ${item.num}</span>
+                </div>
+                <div style="font-size:0.8rem; color:#eab308; margin-bottom:0.2rem;">${item.lang} • ${item.sys}</div>
+                <div style="font-size:0.88rem; color:#cbd5e1;">${item.desc}</div>
+              </div>
+            `).join('')
+          : `<p>No exact canonical lexicon match; see harmonic &amp; factor resonances below:</p>` +
+            res.harmonicMatches.map(item => `
+              <div class="concordance-item">
+                <div class="concordance-header">
+                  <strong>${item.word}</strong>
+                  <span class="concordance-num">≈ ${item.num} (Root ${window.digitalRoot(item.num)})</span>
+                </div>
+                <div style="font-size:0.88rem; color:#cbd5e1;">${item.desc}</div>
+              </div>
+            `).join('');
+
+        document.getElementById('tab-synthesis').innerHTML = `
+          <div class="sacred-card">
+            <h3><span class="badge">Supreme Archetype</span> ${d.title}</h3>
+            <p><strong>“Numbers Are God” Exegesis for “${res.input}”:</strong> Across the Gematria &amp; Mystery traditions, <strong>“${res.input}”</strong> yields English Ordinal <strong>${res.ciphers.engOrdinal}</strong>, Full Reduction <strong>${res.ciphers.fullReduction}</strong> (Pythagorean Destiny <strong>${res.ciphers.pythDestiny.value}</strong>), Reverse Ordinal <strong>${res.ciphers.engRevOrdinal}</strong>, Jewish Gematria <strong>${res.ciphers.agrippa}</strong>, Hebrew Hechrachi <strong>${res.ciphers.hechrachi}</strong>, and Greek Isopsephy <strong>${res.ciphers.isopsephy}</strong>.</p>
+            <p>${d.esoteric}</p>
+            <div class="grid-2" style="margin-top:1rem;">
+              <div>
+                <p><strong>• Pythagorean &amp; Greek Essence:</strong> ${d.pythagorean}</p>
+                <p><strong>• Biblical &amp; Prophetic Witness:</strong> ${d.biblical}</p>
+                <p><strong>• Kabbalistic Sefira:</strong> ${d.sefira} &amp; Initiating Letter <strong>${res.archetypes.roshLetter.name} (${res.letters[0].hebrew})</strong> — ${res.archetypes.roshLetter.meaning}.</p>
+              </div>
+              <div>
+                <p><strong>• Astrological &amp; Planetary Ruler:</strong> ${d.planet} (${d.astrology})</p>
+                <p><strong>• Chaldean Mystic Tablet (${res.ciphers.chaldCompound}):</strong> ${res.archetypes.chaldeanMeaning}</p>
+                <p><strong>• Druidic Ogham &amp; Triad Wisdom:</strong> ${d.druid} Dominant Grove Tree: <strong>${res.archetypes.dominantOgham.tree} (${res.archetypes.dominantOgham.oghamChar})</strong>.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="sacred-card">
+              <h3>Sacred Concordance &amp; Isopsephic / Gematria Twins</h3>
+              <p>Words and divine names sharing your phrase’s exact numerical vibrations across our 28+ ciphers:</p>
+              ${matchesHtml}
+            </div>
+            <div class="sacred-card">
+              <h3>Inner Architecture: Soul, Persona &amp; Mathematical Signature</h3>
+              <p><strong>• Soul Urge (Vowels = ${res.ciphers.pythVowelsRaw} → ${res.ciphers.pythSoulUrge.value}):</strong> Governed by <em>${(window.SACRED_KNOWLEDGE.pythagoreanDecad[res.ciphers.pythSoulUrge.value] || m).title}</em>.</p>
+              <p><strong>• Outer Persona (Consonants = ${res.ciphers.pythConsonantsRaw} → ${res.ciphers.pythPersona.value}):</strong> Expresses <em>${(window.SACRED_KNOWLEDGE.pythagoreanDecad[res.ciphers.pythPersona.value] || m).title}</em>.</p>
+              <p><strong>• Arithmological Properties of ${res.ciphers.primaryGematria}:</strong></p>
+              <ul style="margin-left:1.2rem; color:#cbd5e1; font-size:0.9rem;">
+                <li><strong>Prime / Composite Status:</strong> ${res.math.isPrime ? 'Prime Number (Indivisible Monad-like Unity!)' : 'Composite (' + res.math.factors.join(' × ') + ')'}</li>
+                <li><strong>Pythagorean Aliquot Nature:</strong> ${res.math.perfection} (Proper Divisor Sum = ${res.math.aliquotSum})</li>
+                <li><strong>Geometric Figurates:</strong> ${res.math.isTriangular ? `Triangular Number T(${res.math.triangularIndex})! ` : ''}${res.math.isSquare ? `Perfect Square (${res.math.squareRoot}²)! ` : ''}${res.math.isFibonacci ? 'Fibonacci Sequence Member! ' : ''}${(!res.math.isTriangular && !res.math.isSquare && !res.math.isFibonacci) ? 'Asymmetric Dynamic Progression' : ''}</li>
+                <li><strong>Sacred Base Conversions:</strong> Binary <code>${res.math.binary}</code> • Duodecimal (Base-12 Zodiacal) <code>${res.math.duodecimal}</code> • Hexadecimal <code>0x${res.math.hex}</code></li>
+              </ul>
+            </div>
+          </div>
+        `;
+
+        // 5. TAB 3: Jewish Kabbalah & Gematria
+        document.getElementById('tab-kabbalah').innerHTML = `
+          <div class="grid-2">
+            <div class="sacred-card">
+              <h3>Sefer Yetzirah &amp; The 10 Sefirot of the Tree of Life</h3>
+              <p>The <em>Sefer Yetzirah</em> (Book of Formation) declares that God carved the universe through <strong>32 Mystical Paths of Wisdom</strong>: the 10 Sefirot and the 22 Sacred Hebrew Letters.</p>
+              <p><strong>Active Sefira for “${res.input}” (Monad ${res.ciphers.monadRoot}):</strong> <span class="badge">${m.sefira}</span></p>
+              ${buildSefirotSVG(res.ciphers.monadRoot === 0 ? 10 : res.ciphers.monadRoot)}
+            </div>
+            <div class="sacred-card">
+              <h3>Kabbalistic &amp; Western Jewish Gematria Systems</h3>
+              <ul style="margin-left:1.2rem; color:#cbd5e1; font-size:0.9rem; line-height:1.8;">
+                <li><strong>Hebrew Mispar Hechrachi (Standard):</strong> <strong>${res.ciphers.hechrachi}</strong></li>
+                <li><strong>Hebrew Mispar Gadol (With Sofit 500–900):</strong> <strong>${res.ciphers.gadol}</strong></li>
+                <li><strong>Jewish (Agrippa Latin Gematria):</strong> <strong>${res.ciphers.agrippa}</strong></li>
+                <li><strong>Jewish Reduction:</strong> <strong>${res.gematriaSuite.jewish_reduction.total}</strong> • <strong>Jewish Ordinal:</strong> <strong>${res.gematriaSuite.jewish_ordinal.total}</strong></li>
+                <li><strong>Alphanumeric Qabbalah (AQ Base-36):</strong> <strong>${res.gematriaSuite.alphanumeric_qabbalah.total}</strong></li>
+                <li><strong>Atbash Mirror Cipher (אתב"ש):</strong> Transforms <code>${res.scripts.hebrew}</code> into <code>${res.scripts.atbash}</code> = <strong>${res.ciphers.atbashTotal}</strong></li>
+              </ul>
+              <hr style="border:none; border-top:1px solid var(--border-subtle); margin:1rem 0;" />
+              <p><strong>Head Letter (Rosh HaTeivah): ${res.archetypes.roshLetter.name} (${res.letters[0].hebrew})</strong> — ${res.archetypes.roshLetter.meaning}</p>
+            </div>
+          </div>
+        `;
+
+        // 6. TAB 4: Biblical Numerology
+        document.getElementById('tab-biblical').innerHTML = `
+          <div class="sacred-card">
+            <h3>Biblical Numerology &amp; Scriptural Architecture</h3>
+            <div class="grid-2" style="margin-top:0.75rem;">
+              <div>
+                <h4 style="color:#fde047; margin-bottom:0.4rem;">Primary Biblical Resonance (${res.ciphers.pythDestiny.value})</h4>
+                <p>${d.biblical}</p>
+                <h4 style="color:#fde047; margin:1rem 0 0.4rem;">Scriptural Factor Decomposition of ${res.ciphers.hechrachi}</h4>
+                <p>The Gematria value <strong>${res.ciphers.hechrachi}</strong> factors into <strong>${res.math.factors.join(' × ') || '1'}</strong>. Divisors: ${res.math.divisors.join(', ')}.</p>
+              </div>
+              <div>
+                <h4 style="color:#fde047; margin-bottom:0.4rem;">Key Biblical Numbers Reference</h4>
+                <ul style="margin-left:1.2rem; color:#cbd5e1; font-size:0.88rem; line-height:1.7;">
+                  <li><strong>1 (Unity):</strong> “The Lord our God is One” (Deut 6:4).</li>
+                  <li><strong>3 (Divine Completeness):</strong> Trinity, 3rd Day Resurrection.</li>
+                  <li><strong>4 (Creation &amp; Cosmos):</strong> 4 Gospels, 4 Living Creatures.</li>
+                  <li><strong>5 (Grace &amp; Torah):</strong> 5 Books of Moses, 5 Loaves.</li>
+                  <li><strong>6 (Man &amp; Labor):</strong> Creation of Adam on Day 6.</li>
+                  <li><strong>7 (Spiritual Perfection):</strong> Sabbath, 7 Lamps of the Menorah, 7 Seals.</li>
+                  <li><strong>8 (New Birth):</strong> 8 saved in the Ark, 888 = Jesus (Ἰησοῦς).</li>
+                  <li><strong>10 (Law &amp; Testimony):</strong> 10 Commandments, 10 Utterances.</li>
+                  <li><strong>12 (Divine Government):</strong> 12 Tribes, 12 Apostles, 144,000.</li>
+                  <li><strong>40 (Probation &amp; Renewal):</strong> 40 Days on Sinai &amp; in the Wilderness.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 7. TAB 5: Greek Isopsephy & Pythagorean Arithmology
+        document.getElementById('tab-greek').innerHTML = `
+          <div class="grid-2">
+            <div class="sacred-card">
+              <h3>The Sacred Tetractys (Τετρακτύς) &amp; Pythagorean Oath</h3>
+              <p>Pythagoras taught that <em>“All things are Numbers” (Πάντα ἀριθμός ἐστιν)</em> and that the soul ascends by contemplating the <strong>Tetractys</strong> ($1 + 2 + 3 + 4 = 10$).</p>
+              ${buildTetractysSVG(m.tetractysRow, res.ciphers.monadRoot)}
+              <p style="text-align:center; margin-top:0.5rem; font-size:0.85rem; color:#fde047;">
+                Highlighted Point: <strong>${res.ciphers.monadRoot}</strong> (${m.greekTitle}) on Row <strong>${m.tetractysRow}</strong>.
+              </p>
+            </div>
+            <div class="sacred-card">
+              <h3>Greek Isopsephy (Ἰσοψηφία) = ${res.ciphers.isopsephy}</h3>
+              <p><strong>• Greek Transliteration:</strong> <code>${res.scripts.greek}</code> = <strong>${res.ciphers.isopsephy}</strong></p>
+              <p><strong>• Hellenic Deity &amp; Principle (${res.ciphers.pythDestiny.value}):</strong> <em>${d.greekTitle}</em></p>
+              <p>${d.pythagorean}</p>
+            </div>
+          </div>
+        `;
+
+        // 8. TAB 6: Astrology & Agrippa Planetary Kameas
+        const kameaOrder = Math.min(9, Math.max(3, res.ciphers.monadRoot === 1 ? 6 : (res.ciphers.monadRoot === 2 ? 9 : res.ciphers.monadRoot)));
+        const kameaInfo = window.SACRED_KNOWLEDGE.planetaryKameas[kameaOrder];
+        const sqMatrix = generateMagicSquare(kameaOrder);
+        const activeCellNum = ((res.ciphers.hechrachi - 1) % (kameaOrder * kameaOrder)) + 1;
+        const kameaCellsHtml = sqMatrix.map(row =>
+          row.map(val => `<div class="kamea-cell ${val === activeCellNum ? 'active-cell' : ''}">${val}</div>`).join('')
+        ).join('');
+
+        document.getElementById('tab-astrology').innerHTML = `
+          <div class="grid-2">
+            <div class="sacred-card">
+              <h3>Astrological Ruler &amp; Celestial Correspondence</h3>
+              <p><strong>• Planetary Sovereign of ${res.ciphers.pythDestiny.value}:</strong> <span class="badge">${d.planet}</span></p>
+              <p><strong>• Elemental Triplicity:</strong> ${d.element}</p>
+              <p><strong>• Astrological Influence:</strong> ${d.astrology}</p>
+              <p><strong>• Initiating Letter’s Celestial Gate (${res.letters[0].hebrew} — ${res.archetypes.roshLetter.name}):</strong> Mapped in <em>Sefer Yetzirah</em> to <strong>${res.archetypes.roshLetter.astro}</strong>.</p>
+            </div>
+            <div class="sacred-card">
+              <h3>Agrippa’s Planetary Kamea: ${kameaInfo.planet} (${kameaInfo.size})</h3>
+              <p style="font-size:0.88rem;">
+                <strong>Hebrew Sphere:</strong> ${kameaInfo.hebrewName} • <strong>Line Sum:</strong> ${kameaInfo.lineSum} • <strong>Total Sum:</strong> ${kameaInfo.totalSum}<br/>
+                <strong>Divine Name:</strong> ${kameaInfo.divineName} • <strong>Intelligence:</strong> ${kameaInfo.intelligence}
+              </p>
+              <div style="text-align:center; overflow-x:auto;">
+                <div class="kamea-grid" style="grid-template-columns: repeat(${kameaOrder}, 44px);">
+                  ${kameaCellsHtml}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // 9. TAB 7: Druidic Ogham & Celtic Triads
+        const ogh = res.archetypes.dominantOgham;
+        document.getElementById('tab-druids').innerHTML = `
+          <div class="grid-2">
+            <div class="sacred-card">
+              <h3>Druidic Ogham Tree Oracle (Coelbren &amp; Beith-Luis-Nin)</h3>
+              <p><strong>• Your Name’s Ogham Stave:</strong> <span class="badge" style="font-size:1.1rem;">${res.scripts.ogham}</span></p>
+              <p><strong>• Dominant Sovereign Tree Spirit:</strong> <strong>${ogh.tree} (${ogh.oghamChar})</strong></p>
+              <p><strong>• Aicme Family &amp; Lunar Season:</strong> ${ogh.aicme} • ${ogh.month}</p>
+              <p><strong>• Druidic Oracle Meaning:</strong> ${ogh.meaning}</p>
+            </div>
+            <div class="sacred-card">
+              <h3>Celtic Arithmology: The Three Rays of Awen (/|\\) &amp; The Triads</h3>
+              <p><strong>• Your Word’s Druidic Resonance (${res.ciphers.pythDestiny.value}):</strong> ${d.druid}</p>
+              <p>The Druids structured their sacred teachings in Triads reflecting the Three Rays of Awen (<code>/|\\</code>): Wisdom, Love, and Truth across the Three Circles of Existence (<em>Abred</em>, <em>Gwynfyd</em>, and <em>Ceugant</em>).</p>
+            </div>
+          </div>
+        `;
+
+        // 10. TAB 8: Letter-by-Letter Matrix
+        const rowsHtml = res.letters.map(l => `
+          <tr>
+            <td><strong>${l.index}</strong></td>
+            <td style="font-size:1.1rem; font-weight:700; color:#fde047;">${l.raw}</td>
+            <td><strong>${l.engOrd}</strong> / ${l.engRevOrd}</td>
+            <td><strong>${l.fullRed}</strong> / ${l.revFullRed}</td>
+            <td>${l.agrippa}</td>
+            <td>${l.satanic} / ${l.septenary}</td>
+            <td>${l.hebrew} (${l.hebrewVal})</td>
+            <td>${l.greek} (${l.greekVal})</td>
+            <td>${l.chald}</td>
+            <td>${l.oghamChar} ${l.oghamTree}</td>
+          </tr>
+        `).join('');
+
+        document.getElementById('tab-letters').innerHTML = `
+          <div class="sacred-card">
+            <h3>Complete Letter-by-Letter Sacred Cipher Breakdown (${res.letterCount} Letters)</h3>
+            <div class="table-wrap">
+              <table class="cipher-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Char</th>
+                    <th>Ordinal / Rev</th>
+                    <th>Full Red / Rev</th>
+                    <th>Jewish</th>
+                    <th>Satanic / Sept</th>
+                    <th>Hebrew (Gematria)</th>
+                    <th>Greek (Isopsephy)</th>
+                    <th>Chaldean</th>
+                    <th>Druid Ogham Tree</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rowsHtml}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Wire events
+      cipherBtn.addEventListener('click', renderAll);
+      wordInput.addEventListener('input', renderAll);
+      compareInput.addEventListener('input', renderAll);
+
+      document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          wordInput.value = btn.getAttribute('data-val');
+          renderAll();
+        });
+      });
+
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-filter'));
+          btn.classList.add('active-filter');
+          selectedCategory = btn.getAttribute('data-cat');
+          const res = window.cipherText(wordInput.value || 'Numbers Are God');
+          if (res) renderSuiteGrid(res);
+        });
+      });
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.tradition-panel').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.getAttribute('data-tab'));
+          if (target) target.classList.add('active');
+        });
+      });
+
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
