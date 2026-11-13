@@ -155,7 +155,11 @@
       const chars = Array.from(word);
       chars.forEach((ch, idx) => {
         const isWordEnd = idx === chars.length - 1;
-        const upper = ch.toUpperCase();
+        const upper = ch
+          .replace(/[đĐ]/g, 'D')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toUpperCase();
         const grkNorm = normalizeGreekChar(ch);
         let entry = null;
 

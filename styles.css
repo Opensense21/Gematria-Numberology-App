@@ -36,10 +36,45 @@ body {
 
 /* Header */
 .sacred-header {
+  position: relative;
   text-align: center;
   padding: 2.5rem 1.5rem 1.75rem;
   border-bottom: 1px solid var(--border-hairline);
   background: var(--bg-surface);
+}
+
+.lang-toggle {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  display: inline-flex;
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.lang-btn {
+  background: transparent;
+  color: var(--ink-muted);
+  border: none;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+
+.lang-btn:hover {
+  color: var(--ink-black);
+}
+
+.lang-btn.active {
+  background: var(--ink-black);
+  color: var(--bg-cream);
 }
 
 .sacred-subtitle-top {
