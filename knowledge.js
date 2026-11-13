@@ -723,7 +723,139 @@
       { num: 777, word: 'Lamech’s Years & Threefold Covenant Perfection', lang: 'Biblical / Esoteric', sys: 'Universal', desc: 'Genesis 5:31 (777 years); the Flaming Sword descending the Tree of Life.' },
       { num: 781, word: 'Sophia (Σοφία — Divine Wisdom)', lang: 'Greek', sys: 'Isopsephy', desc: 'Wisdom in Greek Isopsephy (781).' },
       { num: 888, word: 'Iesous (Ἰησοῦς — Jesus)', lang: 'Greek / Biblical', sys: 'Isopsephy', desc: 'Jesus in Greek Isopsephy (888) — the Triple Ogdoad of Resurrection.' },
-      { num: 906, word: 'Jesus (Jewish / Agrippa Latin Gematria)', lang: 'Jewish Gematria', sys: 'Jewish (Agrippa)', desc: 'J(600) + E(5) + S(90) + U(200) + S(90) - wait: J(600)+E(5)+S(90)+U(200)+S(90) = 985.' }
-    ]
+      { num: 906, word: 'Jesus (Jewish / Agrippa Latin Gematria)', lang: 'Jewish Gematria', sys: 'Jewish (Agrippa)', desc: 'J(600) + E(5) + S(90) + U(200) + S(90) = 985 (or 906 in variant I/J).' }
+    ],
+
+    // 9. FULL PYTHAGOREAN & NUMEROLOGY MEANINGS (1–9, 11, 22, 33)
+    pythagoreanFullMeanings: {
+      1: {
+        archetype: 'The Pioneer & Originator',
+        keywords: ['Independence', 'Leadership', 'Originality', 'Willpower', 'Initiative'],
+        overview: 'Number 1 is the Monad—the primal spark of creation, individuality, and self-determined action. In Pythagorean numerology, it represents the point before dimension, the unified will that steps forward into uncharted territory. People and names carrying 1 are designed to lead rather than follow, forging original paths through clarity of vision and personal courage.',
+        strengths: 'Natural executive ability, fierce independence, inventive problem-solving, unwavering determination, and the capacity to inspire others by example. You thrive when given autonomy and a blank canvas to build something new.',
+        challenges: 'Self-doubt disguised as stubbornness, impatience with slower collaborators, isolation from refusing help, or over-identifying with ego and control. Growth comes from learning that true leadership empowers others rather than dominating them.',
+        vocation: 'Entrepreneurship, executive leadership, architecture, invention, independent research, design direction, or any pioneering role where originality and decisiveness are rewarded.',
+        relationships: 'Needs a partner who respects autonomy and brings equal strength to the bond. At your best, you are fiercely loyal, protective, and inspiring; watch for a tendency to take over decision-making without consulting your partner.',
+        pythagoreanPhilosophy: 'Pythagoras called the Monad "the generator of all numbers" and "the Even-Odd" because adding it to an even number produces odd, and to an odd produces even. Geometrically it is the dimensionless center from which the circle radiates.'
+      },
+      2: {
+        archetype: 'The Diplomat & Intuitive Mediator',
+        keywords: ['Harmony', 'Sensitivity', 'Cooperation', 'Intuition', 'Partnership'],
+        overview: 'Number 2 is the Dyad—the sacred mirror of relationship, empathy, and subtle perception. Where 1 initiates through solitary force, 2 unites opposites through listening, patience, and emotional intelligence. It is the vibration of the peacemaker, counselor, and silent power behind enduring alliances.',
+        strengths: 'Extraordinary tact, deep emotional attunement, pattern recognition in human dynamics, patience for detail, and the ability to bring warring perspectives into equilibrium. You notice what others overlook.',
+        challenges: 'Over-sensitivity to criticism, chronic indecision, people-pleasing at the expense of personal boundaries, or suppressing anger until it turns into quiet resentment. Your lesson is to stand firm in your own truth while remaining compassionate.',
+        vocation: 'Diplomacy, mediation, psychology, counseling, music, collaborative arts, editorial curation, healing professions, and strategic partnerships.',
+        relationships: 'Deeply devoted, romantic, and attentive to a partner’s unspoken needs. You flourish in balanced, respectful partnerships and must avoid losing your individual voice in the desire to keep the peace.',
+        pythagoreanPhilosophy: 'The Pythagoreans named the Dyad "Tolma" (Daring) because it was the first number to step away from the solitary Monad to create reflection, polarity, and the geometric line connecting two points.'
+      },
+      3: {
+        archetype: 'The Expressive Creator & Communicator',
+        keywords: ['Creativity', 'Expression', 'Joy', 'Synthesis', 'Eloquence'],
+        overview: 'Number 3 is the Triad—the synthesis of 1 and 2 into living expression, art, and communication. It governs language, imagination, social magnetism, and the optimism that turns raw ideas into inspiring stories. Those guided by 3 are here to uplift, articulate, and bring beauty into everyday life.',
+        strengths: 'Infectious enthusiasm, verbal and artistic fluency, quick wit, social grace, and an ability to see creative possibilities where others see dead ends. You naturally lift the mood of any room.',
+        challenges: 'Scattered focus across too many unfinished projects, superficiality when avoiding deeper emotions, sensitivity to rejection, or using humor to deflect vulnerability. Mastery requires pairing your natural flair with steady discipline.',
+        vocation: 'Writing, speaking, filmmaking, design, performing arts, marketing, teaching, culinary arts, and any field centered on storytelling or creative synthesis.',
+        relationships: 'Warm, playful, and affectionate; you need mental stimulation, laughter, and open communication. Avoid drifting when routine sets in—channel your creativity into keeping the shared life vibrant.',
+        pythagoreanPhilosophy: 'In Pythagorean geometry, 3 is the first true number with beginning, middle, and end, forming the Triangle—the simplest stable plane figure and the foundation of all structural harmony.'
+      },
+      4: {
+        archetype: 'The Master Builder & Architect',
+        keywords: ['Structure', 'Discipline', 'Reliability', 'Endurance', 'Craft'],
+        overview: 'Number 4 is the Tetrad—the foundation of order, tangible reality, and enduring craftsmanship. It transforms abstract inspiration into reliable systems, institutions, and physical form. People with strong 4 energy are the bedrock of their families and communities: methodical, honest, and deeply dependable.',
+        strengths: 'Unmatched work ethic, systematic thinking, integrity, practical wisdom, financial prudence, and the patience to build things that outlast trends. When you commit, the work gets done properly.',
+        challenges: 'Rigidity, resistance to sudden change, workaholism, pessimism when plans derail, or becoming overly critical of less structured people. Growth arrives when you treat structure as a support for life rather than a cage.',
+        vocation: 'Engineering, architecture, law, finance, operations, software systems, craftsmanship, project management, and institutional leadership.',
+        relationships: 'Loyal, steady, and protective—you show love through consistent actions, reliability, and building a secure home. Remember to leave room for spontaneity and emotional tenderness.',
+        pythagoreanPhilosophy: 'The Tetrad was sacred to Pythagoras as the root of the Tetractys (1 + 2 + 3 + 4 = 10) and the fourfold order of nature: 4 elements, 4 seasons, 4 cardinal directions, and the 4 mathematical sciences (Quadrivium).'
+      },
+      5: {
+        archetype: 'The Explorer & Catalyst of Freedom',
+        keywords: ['Freedom', 'Adaptability', 'Curiosity', 'Change', 'Experience'],
+        overview: 'Number 5 is the Pentad—the dynamic center of the 1–9 cycle, representing movement, sensory curiosity, and evolutionary change. It breaks stagnation and expands horizons through travel, conversation, and direct experience. A 5 vibration refuses to be boxed in; it learns by engaging with the full spectrum of life.',
+        strengths: 'Quick-witted adaptability, magnetic charisma, versatility across disciplines, courage in unfamiliar environments, and a talent for communicating across diverse cultures and audiences.',
+        challenges: 'Restlessness, fear of commitment, impulsivity, overindulgence in sensory distractions, or abandoning worthy paths the moment they require routine. True freedom comes from self-mastery, not constant escape.',
+        vocation: 'Journalism, travel, sales, consulting, entrepreneurship, public relations, linguistics, adventure leadership, and dynamic media.',
+        relationships: 'Exciting, passionate, and fiercely independent—you thrive with a partner who shares your curiosity and gives you breathing room. Avoid mistaking novelty for depth; real intimacy is its own adventure.',
+        pythagoreanPhilosophy: 'Called the "Hieros Gamos" (Sacred Marriage) because it unites the first female/even number (2) and first male/odd number (3). Its symbol is the Pentagram, governed throughout by the Golden Ratio (Φ).'
+      },
+      6: {
+        archetype: 'The Nurturer & Guardian of Harmony',
+        keywords: ['Responsibility', 'Compassion', 'Beauty', 'Service', 'Sanctuary'],
+        overview: 'Number 6 is the Hexad—the vibration of heart-centered responsibility, aesthetic harmony, and protective care. It governs home, community, healing, and ethical stewardship. Those carrying 6 feel a natural calling to mend what is broken, beautify their surroundings, and look after the wellbeing of others.',
+        strengths: 'Deep empathy, artistic taste, trustworthiness, natural mentoring ability, and a gift for creating warm, welcoming spaces where people feel safe and valued.',
+        challenges: 'Over-responsibility, meddling in others’ choices under the guise of helping, perfectionism, self-sacrifice leading to burnout, or conditional giving. You must learn to care for yourself with the same devotion you offer everyone else.',
+        vocation: 'Healthcare, teaching, interior/visual design, counseling, hospitality, family law, community leadership, and restorative arts.',
+        relationships: 'Devoted, affectionate, and family-oriented—you seek lasting harmony and mutual care. Guard against taking on a parental role toward your partner; aim for equal partnership.',
+        pythagoreanPhilosophy: '6 is the first "Perfect Number" in mathematics because it equals both the sum (1 + 2 + 3 = 6) and the product (1 × 2 × 3 = 6) of its proper divisors—celebrated by Pythagoreans as the "Articulation of the Universe."'
+      },
+      7: {
+        archetype: 'The Seeker & Philosopher',
+        keywords: ['Wisdom', 'Analysis', 'Introspection', 'Truth', 'Mysticism'],
+        overview: 'Number 7 is the Heptad—the archetype of the scholar, mystic, and truth-seeker. It looks beneath surface appearances to uncover hidden laws, spiritual meaning, and empirical truth. People with 7 energy need regular solitude to think, research, and synthesize their inner world.',
+        strengths: 'Penetrating intellect, keen intuition, technical or philosophical depth, love of truth over popularity, and a calm, dignified presence that inspires trust.',
+        challenges: 'Emotional detachment, cynicism, over-analyzing simple joys, secrecy, or feeling misunderstood and withdrawing from the world. Your growth lies in sharing your hard-won wisdom with warmth and humility.',
+        vocation: 'Science, philosophy, data/systems analysis, investigative journalism, psychology, theology, academia, strategy, and esoteric research.',
+        relationships: 'Selective and deeply loyal once trust is earned; you value intellectual depth and quiet authenticity over small talk. Practice expressing feelings openly rather than retreating into silence.',
+        pythagoreanPhilosophy: 'Revered by Philolaus and Pythagoras as the "Motherless Virgin" (Athena): within the Decad (1–10), 7 neither multiplies to produce another number in the set nor is produced by multiplying any others.'
+      },
+      8: {
+        archetype: 'The Executive & Master of Manifestation',
+        keywords: ['Authority', 'Abundance', 'Ambition', 'Balance', 'Legacy'],
+        overview: 'Number 8 is the Ogdoad—the loop of infinity uniting spiritual cause with material effect. It governs power, finance, organizational mastery, and karmic justice. Those with 8 energy are meant to handle substantial responsibility, build lasting prosperity, and use authority with ethical fairness.',
+        strengths: 'Strategic vision, executive stamina, financial acumen, resilience under pressure, and an ability to organize large-scale efforts into measurable success.',
+        challenges: 'Workaholism, equating self-worth with wealth or status, controlling behavior, or swings between extremes of abundance and loss. True mastery comes from serving a purpose larger than personal gain.',
+        vocation: 'Executive leadership, finance, investment, law, real estate, entrepreneurship, governance, and large-scale philanthropy.',
+        relationships: 'Passionate, protective, and drawn to capable, strong-willed partners. Balance your drive for achievement with presence, tenderness, and shared vulnerability at home.',
+        pythagoreanPhilosophy: '8 is the first three-dimensional Cube (2³ = 8) and the musical Octave (Harmonia). It symbolizes cosmic equilibrium—"as above, so below"—and immutable natural law.'
+      },
+      9: {
+        archetype: 'The Humanitarian & Wise Finisher',
+        keywords: ['Compassion', 'Completion', 'Universalism', 'Wisdom', 'Generosity'],
+        overview: 'Number 9 is the Ennead—the culmination of the single-digit cycle, containing the wisdom of 1 through 8. It represents universal compassion, artistic depth, forgiveness, and service to humanity as a whole. People carrying 9 often feel like old souls called to heal, teach, or elevate the collective.',
+        strengths: 'Broad-minded empathy, magnetic idealism, artistic sensitivity, generosity of spirit, and an ability to see the big picture beyond petty divisions.',
+        challenges: 'Difficulty letting go of the past, disillusionment when the world falls short of ideals, Martyr-like self-sacrifice, or emotional overwhelm. Growth requires healthy boundaries and graceful release.',
+        vocation: 'Nonprofit leadership, humanitarian work, medicine, global arts, teaching, environmental advocacy, counseling, and philanthropy.',
+        relationships: 'Deeply loving, tolerant, and idealistic; you connect best with partners who share your values and compassion. Remember to stay grounded in everyday reciprocity.',
+        pythagoreanPhilosophy: 'Pythagoreans called 9 "Oceanus" and "The Horizon" because all numbers revolve within 1–9. Any number multiplied by 9 reduces back to 9, making it the indestructible mirror of wholeness.'
+      },
+      11: {
+        archetype: 'Master Number 11 — The Visionary & Illuminator',
+        keywords: ['Illumination', 'Intuition', 'Inspiration', 'Sensitivity', 'Catalyst'],
+        overview: 'Master Number 11 is the higher octave of 2—a high-voltage channel of intuition, prophetic insight, and spiritual inspiration. It bridges the conscious mind and the unseen archetypal realm. Those carrying 11 are here to illuminate ideas, awaken others, and translate subtle vision into inspiring reality.',
+        strengths: 'Laser-sharp intuition, charismatic idealism, artistic or philosophical brilliance, and an ability to sense trends and truths long before they become obvious.',
+        challenges: 'Nervous tension, self-doubt, feeling overwhelmed by heightened sensitivity, or swinging between visionary highs and the grounded demands of 2. Grounding practices and practical routines are essential.',
+        vocation: 'Visionary leadership, psychology, writing, music, invention, spiritual teaching, design, and transformative media.',
+        relationships: 'Seeks a soulful, intellectually and spiritually resonant bond. You need a calm, supportive partner who understands your sensitivity without trying to dim your light.',
+        pythagoreanPhilosophy: 'Stepping just beyond the Decad (10), 11 stands between the twin pillars of duality (1 and 1) without being divided—symbolizing direct gnosis and the bridge between worlds.'
+      },
+      22: {
+        archetype: 'Master Number 22 — The Master Architect',
+        keywords: ['Mastery', 'Large-Scale Building', 'Pragmatism', 'Vision', 'Legacy'],
+        overview: 'Master Number 22 is the higher octave of 4—the most potent number for turning lofty spiritual ideals into concrete, world-shaping institutions. It combines the visionary insight of 11 with the disciplined execution of 4. People with 22 are meant to build enduring works that serve many.',
+        strengths: 'Rare synthesis of big-picture vision and practical execution, organizational genius, calm authority, and the stamina to manifest complex, long-term projects.',
+        challenges: 'Immense internal pressure, fear of failure leading to playing small (living solely as a 4), or becoming overly rigid and controlling under stress. Progress happens step by step, not all at once.',
+        vocation: 'Global architecture, civic engineering, institutional founding, international diplomacy, large-scale entrepreneurship, and systems design.',
+        relationships: 'Needs a grounded, trustworthy partner who respects your grand ambitions while reminding you to rest and enjoy simple human warmth.',
+        pythagoreanPhilosophy: '22 is the classical Archimedes numerator of π (22/7), uniting the infinite circle of spirit with the earthly measure of the Tetrad (2 + 2 = 4) and the 22 Sacred Hebrew Letters.'
+      },
+      33: {
+        archetype: 'Master Number 33 — The Master Teacher & Healer',
+        keywords: ['Unconditional Love', 'Healing', 'Guidance', 'Devotion', 'Upliftment'],
+        overview: 'Master Number 33 is the higher octave of 6—combining the creative eloquence of 3 with the compassionate service of 6. It represents selfless mentorship, emotional healing, and uplifting humanity through wisdom and love. Those carrying 33 lead by quiet radiance and moral integrity.',
+        strengths: 'Extraordinary empathy, inspiring communication, natural healing presence, artistic grace, and an ability to bring out the highest potential in others.',
+        challenges: 'Taking on the emotional weight of the world, neglecting personal needs, or feeling crushed by perfectionist ideals. You serve best when your own cup is full.',
+        vocation: 'Teaching, healing arts, humanitarian leadership, counseling, sacred or fine arts, mentorship, and community stewardship.',
+        relationships: 'Warm, nurturing, and deeply devoted; look for a partner who offers mutual care rather than someone who only leans on your strength.',
+        pythagoreanPhilosophy: 'The union of two Triads (3 × 11 = 33, reducing to the Perfect Hexad 6), symbolizing cosmic harmony expressed through compassionate wisdom.'
+      }
+    },
+
+    // 10. KARMIC DEBT NUMBERS
+    karmicDebts: {
+      13: 'Karmic Debt 13/4 — Mastery Through Focused Effort: Calls you to overcome shortcuts, scattered energy, or frustration with slow progress by embracing patient, disciplined craftsmanship. When honored, 13 transforms obstacles into enduring achievement.',
+      14: 'Karmic Debt 14/5 — Freedom Through Self-Discipline: Teaches balance amid rapid change, sensory temptation, and restlessness. True liberty is unlocked through commitment, moderation, and clear focus.',
+      16: 'Karmic Debt 16/7 — Awakening Beyond Ego: Represents the "Shattered Citadel" where false pride or illusion falls away so authentic wisdom, humility, and spiritual clarity can emerge.',
+      19: 'Karmic Debt 19/1 — Independence With Empathy: Balances strong willpower and self-reliance with the humility to accept support and consider others’ needs rather than walking entirely alone.'
+    }
   };
 })();

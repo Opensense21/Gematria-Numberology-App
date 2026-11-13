@@ -375,6 +375,20 @@
     const chaldRoot = reduceMaster(chaldCompound);
     const monadRoot = digitalRoot(pythRaw || hechrachi);
 
+    // Pythagorean digit frequency (1-9) for Hidden Passion & Karmic Lessons
+    const pythFreq = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+    letters.forEach(l => {
+      const p = digitalRoot(l.pyth);
+      if (p >= 1 && p <= 9) pythFreq[p]++;
+    });
+    const karmicLessons = Object.entries(pythFreq)
+      .filter(([, count]) => count === 0)
+      .map(([digit]) => Number(digit));
+    const maxFreq = Math.max(...Object.values(pythFreq));
+    const hiddenPassions = maxFreq > 0
+      ? Object.entries(pythFreq).filter(([, c]) => c === maxFreq).map(([d]) => Number(d))
+      : [];
+
     const hebrewScript = letters.map(l => l.hebrew).join('');
     const atbashScript = letters.map(l => l.atbashChar).join('');
     const greekScript = letters.map(l => l.greek).join('');
@@ -442,6 +456,9 @@
         pythSoulUrge,
         pythConsonantsRaw,
         pythPersona,
+        pythFreq,
+        karmicLessons,
+        hiddenPassions,
         chaldCompound,
         chaldRoot,
         monadRoot,
@@ -464,6 +481,150 @@
     };
   }
 
+  function reduceWithKarmic(n) {
+    n = Math.abs(Math.floor(n));
+    const steps = [n];
+    const karmicFound = [];
+    const checkKarmic = val => {
+      if ([13, 14, 16, 19].includes(val) && !karmicFound.includes(val)) {
+        karmicFound.push(val);
+      }
+    };
+    checkKarmic(n);
+    while (n > 9 && n !== 11 && n !== 22 && n !== 33) {
+      n = String(n).split('').reduce((a, b) => a + Number(b), 0);
+      steps.push(n);
+      checkKarmic(n);
+    }
+    return { value: n, steps, karmicFound };
+  }
+
+  function analyzeBirthProfile(dobStr, tobStr, nameDestinyVal) {
+    if (!dobStr || !/^\d{4}-\d{2}-\d{2}$/.test(dobStr)) {
+      return null;
+    }
+    const [yStr, mStr, dStr] = dobStr.split('-');
+    const year = parseInt(yStr, 10);
+    const month = parseInt(mStr, 10);
+    const day = parseInt(dStr, 10);
+
+    if (isNaN(year) || isNaN(month) || isNaN(day) || month < 1 || month > 12 || day < 1 || day > 31) {
+      return null;
+    }
+
+    const mRed = reduceMaster(month);
+    const dRed = reduceMaster(day);
+    const yRed = reduceMaster(yStr.split('').reduce((a, b) => a + Number(b), 0));
+
+    const lpSum = mRed.value + dRed.value + yRed.value;
+    const lifePath = reduceWithKarmic(lpSum);
+    const lpFormula = `${month} (${mRed.value}) + ${day} (${dRed.value}) + ${year} (${yRed.value}) = ${lpSum} → ${lifePath.value}`;
+
+    const birthdayNumber = reduceWithKarmic(day);
+    const attitudeNumber = reduceMaster(month + day);
+    const currentYear = new Date().getFullYear();
+    const cyRed = reduceMaster(String(currentYear).split('').reduce((a, b) => a + Number(b), 0));
+    const personalYear = reduceMaster(mRed.value + dRed.value + cyRed.value);
+    const maturityNumber = nameDestinyVal ? reduceMaster(lifePath.value + nameDestinyVal) : null;
+
+    // 4 Pythagorean Pinnacles
+    const mSingle = digitalRoot(month);
+    const dSingle = digitalRoot(day);
+    const ySingle = digitalRoot(year);
+    const p1 = reduceMaster(mSingle + dSingle).value;
+    const p2 = reduceMaster(dSingle + ySingle).value;
+    const p3 = reduceMaster(p1 + p2).value;
+    const p4 = reduceMaster(mSingle + ySingle).value;
+    const lpSingle = digitalRoot(lifePath.value);
+    const p1EndAge = 36 - lpSingle;
+
+    // Birthdate digit frequency (1-9)
+    const dobDigits = (yStr + mStr + dStr).split('').map(Number);
+    const dobFreq = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+    dobDigits.forEach(d => {
+      if (d >= 1 && d <= 9) dobFreq[d]++;
+    });
+
+    // Optional Time of Birth (HH:MM)
+    let timeProfile = null;
+    const tobClean = (tobStr || '').trim();
+    if (tobClean && /^\d{2}:\d{2}$/.test(tobClean)) {
+      const [hhStr, mmStr] = tobClean.split(':');
+      const hh = parseInt(hhStr, 10);
+      const mm = parseInt(mmStr, 10);
+      if (hh >= 0 && hh <= 23 && mm >= 0 && mm <= 59) {
+        const totalMinutes = hh * 60 + mm;
+        const timeSum = hh + mm;
+        const timeSumRoot = reduceMaster(timeSum === 0 ? 12 : timeSum);
+        const minuteRoot = reduceMaster(totalMinutes === 0 ? 1440 : totalMinutes);
+        const refinedSubVibration = reduceMaster(lifePath.value + timeSumRoot.value);
+
+        let arcName = '';
+        let arcPolarity = '';
+        let arcDesc = '';
+        if (hh >= 6 && hh < 12) {
+          arcName = 'Morning Solar Ascendant';
+          arcPolarity = 'Diurnal • Yang (Active Initiation)';
+          arcDesc = 'Born as solar light rises: amplifies outward initiative, clarity of purpose, and forward-facing expression of your Life Path.';
+        } else if (hh >= 12 && hh < 18) {
+          arcName = 'Afternoon Solar Zenith';
+          arcPolarity = 'Diurnal • Yang (Manifestation)';
+          arcDesc = 'Born in peak daylight: strengthens practical execution, public visibility, and grounded social engagement.';
+        } else if (hh >= 18 && hh <= 23) {
+          arcName = 'Evening Lunar Descent';
+          arcPolarity = 'Nocturnal • Yin (Reflection & Intuition)';
+          arcDesc = 'Born in the twilight/evening arc: deepens emotional intelligence, aesthetic sensitivity, and contemplative discernment.';
+        } else {
+          arcName = 'Midnight Deep Sanctuary';
+          arcPolarity = 'Nocturnal • Yin (Mystical & Subconscious)';
+          arcDesc = 'Born in the quiet midnight hours: heightens inner vision, originality, and access to subconscious intuition.';
+        }
+
+        const chaldeanOrder = ['Saturn ♄', 'Jupiter ♃', 'Mars ♂', 'Sun ☉', 'Venus ♀', 'Mercury ☿', 'Moon ☽'];
+        const planetaryRuler = chaldeanOrder[hh % 7];
+
+        timeProfile = {
+          valid: true,
+          formatted: tobClean,
+          hh,
+          mm,
+          totalMinutes,
+          timeSumRoot,
+          minuteRoot,
+          arcName,
+          arcPolarity,
+          arcDesc,
+          planetaryRuler,
+          refinedSubVibration
+        };
+      }
+    }
+
+    return {
+      dobStr,
+      year,
+      month,
+      day,
+      lifePath,
+      lpFormula,
+      birthdayNumber,
+      attitudeNumber,
+      personalYear,
+      currentYear,
+      maturityNumber,
+      pinnacles: {
+        p1, p2, p3, p4,
+        p1EndAge,
+        p2EndAge: p1EndAge + 9,
+        p3EndAge: p1EndAge + 18
+      },
+      dobFreq,
+      timeProfile
+    };
+  }
+
   window.cipherText = cipherText;
   window.digitalRoot = digitalRoot;
+  window.reduceMaster = reduceMaster;
+  window.analyzeBirthProfile = analyzeBirthProfile;
 })();
