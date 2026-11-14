@@ -192,12 +192,160 @@
   ];
 
   let activeVolId = 'vol1';
+  let activeChapterKey = null;
   let searchQuery = '';
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function loadChapterScript(key, cb) {
+    window.__CS249R_CHAPTERS__ = window.__CS249R_CHAPTERS__ || {};
+    if (window.__CS249R_CHAPTERS__[key]) {
+      cb(window.__CS249R_CHAPTERS__[key]);
+      return;
+    }
+    const [vol, slug] = key.split('/');
+    const script = document.createElement('script');
+    script.src = `cs249r_data/${vol}_${slug}.js`;
+    script.onload = () => cb(window.__CS249R_CHAPTERS__[key] || null);
+    script.onerror = () => cb(null);
+    document.head.appendChild(script);
+  }
+
+  function renderChapterReader(container, lang, key) {
+    const isVi = lang === 'vi';
+    const [volId, slug] = key.split('/');
+    const vol = VOLUMES.find(v => v.id === volId) || VOLUMES[0];
+    const chIdx = vol.chapters.findIndex(c => c.slug === slug);
+    const chMeta = vol.chapters[chIdx] || vol.chapters[0];
+    const prevCh = chIdx > 0 ? vol.chapters[chIdx - 1] : null;
+    const nextCh = chIdx < vol.chapters.length - 1 ? vol.chapters[chIdx + 1] : null;
+
+    container.innerHTML = `
+      <section class="sacred-card">
+        <p style="margin:0; color:var(--ink-muted);">${isVi ? 'Đang tải nội dung chương...' : 'Loading chapter lesson...'}</p>
+      </section>
+    `;
+
+    loadChapterScript(key, (data) => {
+      if (!data) {
+        container.innerHTML = `
+          <section class="sacred-card">
+            <button type="button" id="csBackBtn" class="btn-secondary">&larr; ${isVi ? 'Quay lại danh sách chương' : 'Back to Chapters'}</button>
+            <p style="margin-top:1rem;">${isVi ? 'Không thể tải dữ liệu chương này.' : 'Unable to load chapter data.'}</p>
+          </section>
+        `;
+        document.getElementById('csBackBtn').addEventListener('click', () => {
+          activeChapterKey = null;
+          renderCS249r(lang);
+        });
+        return;
+      }
+
+      const tocHtml = (data.sections || []).map(sec => `
+        <a href="#${sec.id}" class="cs-toc-link" data-sec="${sec.id}">${escapeHtml(sec.title)}</a>
+      `).join('');
+
+      const quizzesHtml = (data.quizzes && data.quizzes.length > 0)
+        ? `
+          <section class="sacred-card" style="margin-top:1.5rem;">
+            <h3>${isVi ? 'Câu Hỏi Ôn Tập Chương' : 'Chapter Self-Check Quizzes'} (${data.quizzes.length})</h3>
+            ${data.quizzes.map((q, idx) => `
+              <div class="cs-quiz-card">
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; margin-bottom:0.4rem;">
+                  <span class="badge">${escapeHtml(q.type)}</span>
+                  <span style="font-size:0.75rem; color:var(--ink-muted);">${escapeHtml(q.section)}</span>
+                </div>
+                <p style="font-weight:600; color:var(--ink-black); margin-bottom:0.5rem;">${idx + 1}. ${escapeHtml(q.question)}</p>
+                ${(q.choices && q.choices.length > 0) ? q.choices.map((c, cIdx) => `
+                  <button type="button" class="cs-quiz-choice" data-qidx="${idx}">${String.fromCharCode(65 + cIdx)}. ${escapeHtml(c)}</button>
+                `).join('') : ''}
+                <div style="margin-top:0.6rem;">
+                  <button type="button" class="btn-ghost cs-reveal-ans" data-qidx="${idx}">${isVi ? 'Xem Đáp Án & Giải Thích' : 'Show Answer & Explanation'}</button>
+                </div>
+                <div id="csQuizAns-${idx}" class="cs-quiz-answer">${escapeHtml(q.answer)}</div>
+              </div>
+            `).join('')}
+          </section>
+        `
+        : '';
+
+      container.innerHTML = `
+        <section class="sacred-card">
+          <div class="cs-reader-topbar">
+            <div style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+              <button type="button" id="csBackBtn" class="btn-secondary">&larr; ${isVi ? 'Tất Cả Chương' : 'All Chapters'}</button>
+              <span class="badge badge-highlight">${vol.num} · Ch. ${chMeta.num}</span>
+            </div>
+            <div style="display:flex; gap:0.45rem; flex-wrap:wrap;">
+              ${prevCh ? `<button type="button" class="btn-ghost cs-nav-ch" data-key="${vol.id}/${prevCh.slug}">&larr; Ch. ${prevCh.num}</button>` : ''}
+              ${nextCh ? `<button type="button" class="btn-ghost cs-nav-ch" data-key="${vol.id}/${nextCh.slug}">Ch. ${nextCh.num} &rarr;</button>` : ''}
+            </div>
+          </div>
+
+          <div style="max-width:820px; margin:0 auto 1.25rem;">
+            <h2 style="font-family:var(--font-serif); font-size:1.75rem; color:var(--ink-black); margin:0 0 0.35rem;">${chMeta.num}. ${escapeHtml(chMeta.title)}</h2>
+            <p style="font-size:0.9rem; color:var(--ink-muted); margin:0;">${escapeHtml(vol.title[lang])}</p>
+          </div>
+
+          ${tocHtml ? `
+            <div class="cs-toc-bar" style="max-width:820px; margin:0 auto 1.5rem;">
+              ${tocHtml}
+            </div>
+          ` : ''}
+
+          <article class="cs-reader-body">
+            ${data.html}
+          </article>
+        </section>
+
+        ${quizzesHtml}
+      `;
+
+      document.getElementById('csBackBtn').addEventListener('click', () => {
+        activeChapterKey = null;
+        renderCS249r(lang);
+      });
+
+      container.querySelectorAll('.cs-nav-ch').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeChapterKey = btn.getAttribute('data-key');
+          renderCS249r(lang);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+
+      container.querySelectorAll('.cs-toc-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.getElementById(link.getAttribute('data-sec'));
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      container.querySelectorAll('.cs-reveal-ans, .cs-quiz-choice').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = btn.getAttribute('data-qidx');
+          const ansEl = document.getElementById(`csQuizAns-${idx}`);
+          if (ansEl) ansEl.classList.toggle('open');
+        });
+      });
+    });
+  }
 
   function renderCS249r(lang) {
     const container = document.getElementById('cs249rContainer');
     if (!container) return;
     const isVi = lang === 'vi';
+
+    if (activeChapterKey) {
+      renderChapterReader(container, lang, activeChapterKey);
+      return;
+    }
 
     const activeVol = VOLUMES.find(v => v.id === activeVolId) || VOLUMES[0];
     const q = searchQuery.trim().toLowerCase();
@@ -226,22 +374,16 @@
     `).join('');
 
     const chaptersHtml = chapterList.length > 0
-      ? chapterList.map(ch => {
-          const chUrl = (ch.vol.id === 'vol1' || ch.vol.id === 'vol2')
-            ? `${ch.vol.url}contents/core/${ch.slug.replace(/^\d+_/, '')}.html`
-            : `${ch.vol.repoUrl}/${ch.slug}`;
-          const fallbackUrl = ch.vol.repoUrl + '/' + ch.slug;
-          return `
-            <div class="cs-chapter-card">
-              <div class="cs-chapter-head">
-                <span class="badge">${ch.vol.num} · Ch. ${ch.num}</span>
-                <a href="${fallbackUrl}" target="_blank" rel="noopener noreferrer" class="cs-ext-link">GitHub ↗</a>
-              </div>
-              <h4 class="cs-chapter-title">${ch.title}</h4>
-              <p class="cs-chapter-desc">${ch.desc}</p>
+      ? chapterList.map(ch => `
+          <div class="cs-chapter-card" style="cursor:pointer;" data-open-ch="${ch.vol.id}/${ch.slug}">
+            <div class="cs-chapter-head">
+              <span class="badge">${ch.vol.num} · Ch. ${ch.num}</span>
+              <span class="cs-ext-link">${isVi ? 'Đọc Bài →' : 'Read Lesson →'}</span>
             </div>
-          `;
-        }).join('')
+            <h4 class="cs-chapter-title">${ch.title}</h4>
+            <p class="cs-chapter-desc">${ch.desc}</p>
+          </div>
+        `).join('')
       : `<p style="color:var(--ink-muted); padding:1rem 0;">${isVi ? 'Không tìm thấy chương phù hợp.' : 'No matching chapters found.'}</p>`;
 
     const toolsHtml = TOOLS.map(tool => `
@@ -258,26 +400,18 @@
       <section class="sacred-card">
         <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem;">
           <div style="max-width:740px;">
-            <span class="badge badge-highlight">Harvard CS249r · Open Textbook</span>
+            <span class="badge badge-highlight">Harvard CS249r · ${isVi ? 'Tích Hợp Đầy Đủ 71 Chương' : 'Full 71-Chapter Built-In Textbook'}</span>
             <h2 style="font-family:var(--font-serif); font-size:1.6rem; margin:0.5rem 0 0.35rem; color:var(--ink-black);">
               ${isVi ? 'Hệ Thống Học Máy (Machine Learning Systems)' : 'Machine Learning Systems (Vols I–IV)'}
             </h2>
             <p style="margin-bottom:0.5rem;">
               ${isVi
-                ? 'Bộ giáo trình mở từ Đại học Harvard về cách xây dựng và lý giải kiến trúc hệ thống Học Máy — đi từ một máy đơn, cụm máy chủ, AI tác tử đến AI vật lý, kèm bộ công cụ thực hành.'
-                : 'An open textbook series from Harvard on how machine learning systems are built and why they are built that way — spanning single machines, distributed fleets, agentic AI, and physical AI.'}
+                ? 'Toàn bộ 71 bài học và câu hỏi ôn tập từ giáo trình Harvard CS249r đã được tích hợp trực tiếp vào ứng dụng — nhấn vào bất kỳ chương nào để đọc ngay tại đây.'
+                : 'All 71 chapters and self-check quizzes from the Harvard CS249r curriculum are built directly into the app — click any chapter below to read the full lesson offline.'}
             </p>
             <p style="font-size:0.86rem; color:var(--ink-muted); margin-bottom:0;">
               <em>“Constraints drive architecture.”</em>
             </p>
-          </div>
-          <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
-            <a href="https://mlsysbook.ai" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration:none; display:inline-block;">
-              ${isVi ? 'Đọc Trực Tuyến (mlsysbook.ai) ↗' : 'Read Online (mlsysbook.ai) ↗'}
-            </a>
-            <a href="https://github.com/harvard-edge/cs249r_book" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none; display:inline-flex; align-items:center;">
-              GitHub Repo ↗
-            </a>
           </div>
         </div>
       </section>
@@ -306,9 +440,7 @@
                 <span class="badge badge-accent">${activeVol.status[lang]}</span>
                 <h4 style="font-family:var(--font-serif); font-size:1.2rem; margin:0.4rem 0 0.2rem;">${activeVol.title[lang]}</h4>
               </div>
-              <a href="${activeVol.url}" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="text-decoration:none;">
-                ${isVi ? 'Mở Tập Này ↗' : 'Open Volume ↗'}
-              </a>
+              <span class="badge">${activeVol.chapters.length} ${isVi ? 'Chương' : 'Chapters'}</span>
             </div>
             <p style="margin:0.35rem 0 0; font-size:0.9rem;"><strong>${isVi ? 'Câu hỏi cốt lõi:' : 'Core systems question:'}</strong> ${activeVol.question[lang]}</p>
           </div>
@@ -330,6 +462,14 @@
         </div>
       </section>
     `;
+
+    container.querySelectorAll('[data-open-ch]').forEach(card => {
+      card.addEventListener('click', () => {
+        activeChapterKey = card.getAttribute('data-open-ch');
+        renderCS249r(lang);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
 
     container.querySelectorAll('[data-vol]').forEach(btn => {
       btn.addEventListener('click', () => {
