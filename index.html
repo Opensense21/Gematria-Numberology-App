@@ -22,6 +22,15 @@
   </header>
 
   <main class="container">
+    <!-- Top-Level 2-Tab App Switcher -->
+    <div style="text-align:center;">
+      <nav class="app-switcher" role="tablist" aria-label="Main Application Tabs">
+        <button type="button" id="appTabNum" class="app-tab-btn active" data-app="app-numerology">Numerology &amp; Gematria</button>
+        <button type="button" id="appTabCs" class="app-tab-btn" data-app="app-cs249r">Harvard CS249r Textbook</button>
+      </nav>
+    </div>
+
+    <div id="app-numerology" class="app-workspace active">
     <!-- Input Console -->
     <section class="cipher-console">
       <div class="input-row">
@@ -137,11 +146,18 @@
 
     <!-- TAB 8: Letter-by-Letter Matrix -->
     <section id="tab-letters" class="tradition-panel"></section>
+    </div>
+
+    <!-- APP TAB 2: Harvard CS249r Textbook -->
+    <div id="app-cs249r" class="app-workspace">
+      <div id="cs249rContainer"></div>
+    </div>
   </main>
 
   <script src="knowledge.js"></script>
   <script src="i18n.js"></script>
   <script src="app.js"></script>
+  <script src="cs249r.js"></script>
   <script>
     (function () {
       const wordInput = document.getElementById('wordInput');
@@ -200,6 +216,13 @@
         document.querySelectorAll('.lang-btn').forEach(btn => {
           btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLang);
         });
+
+        document.getElementById('appTabNum').textContent = currentLang === 'vi'
+          ? 'Thần Số Học & Gematria'
+          : 'Numerology & Gematria';
+        document.getElementById('appTabCs').textContent = currentLang === 'vi'
+          ? 'Giáo Trình Harvard CS249r'
+          : 'Harvard CS249r Textbook';
       }
 
       function generateMagicSquare(n) {
@@ -992,6 +1015,17 @@
           } catch (e) {}
           applyStaticTranslations();
           renderAll();
+          if (window.renderCS249r) window.renderCS249r(currentLang);
+        });
+      });
+
+      document.querySelectorAll('.app-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.app-tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.app-workspace').forEach(w => w.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.getAttribute('data-app'));
+          if (target) target.classList.add('active');
         });
       });
 
@@ -1020,6 +1054,7 @@
 
       applyStaticTranslations();
       renderAll();
+      if (window.renderCS249r) window.renderCS249r(currentLang);
     })();
   </script>
 </body>

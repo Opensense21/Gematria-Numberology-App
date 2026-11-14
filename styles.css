@@ -803,11 +803,139 @@ code {
   font-size: 0.86em;
 }
 
+/* Top-Level 2-Tab App Switcher */
+.app-switcher {
+  display: inline-flex;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.app-tab-btn {
+  background: transparent;
+  color: var(--ink-secondary);
+  border: none;
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.app-tab-btn:hover {
+  color: var(--ink-black);
+}
+
+.app-tab-btn.active {
+  background: var(--ink-black);
+  color: var(--bg-cream);
+}
+
+.app-workspace {
+  display: none;
+}
+
+.app-workspace.active {
+  display: block;
+}
+
+/* Harvard CS249r Textbook Explorer */
+.cs-chapter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+}
+
+.cs-chapter-card {
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.05rem;
+  transition: border-color 0.15s, transform 0.15s, background-color 0.15s;
+}
+
+.cs-chapter-card:hover {
+  border-color: var(--ink-black);
+  background: var(--bg-surface);
+  transform: translateY(-2px);
+}
+
+.cs-chapter-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.45rem;
+}
+
+.cs-ext-link {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent-main);
+  text-decoration: none;
+}
+
+.cs-ext-link:hover {
+  color: var(--ink-black);
+  text-decoration: underline;
+}
+
+.cs-chapter-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  color: var(--ink-black);
+  margin: 0 0 0.35rem;
+}
+
+.cs-chapter-desc {
+  font-size: 0.84rem;
+  color: var(--ink-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cs-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.85rem;
+  margin-top: 0.75rem;
+}
+
+.cs-tool-card {
+  display: block;
+  text-decoration: none;
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.1rem;
+  transition: border-color 0.15s, transform 0.15s, background-color 0.15s;
+}
+
+.cs-tool-card:hover {
+  border-color: var(--ink-black);
+  background: var(--bg-surface);
+  transform: translateY(-2px);
+}
+
 @media (max-width: 640px) {
   .az-grid {
     grid-template-columns: repeat(7, minmax(38px, 1fr));
   }
   .digit-grid-9 {
     grid-template-columns: repeat(5, minmax(36px, 1fr));
+  }
+  .app-switcher {
+    display: flex;
+    width: 100%;
+  }
+  .app-tab-btn {
+    flex: 1;
+    padding: 0.55rem 0.65rem;
+    font-size: 0.8rem;
   }
 }
