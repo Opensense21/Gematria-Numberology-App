@@ -1101,3 +1101,138 @@ code {
     font-size: 0.8rem;
   }
 }
+
+/* ==================== OfficeCLI Live Studio ==================== */
+.oc-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+
+.oc-studio-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.05fr) minmax(320px, 1.15fr);
+  gap: 1.15rem;
+  align-items: start;
+}
+
+@media (max-width: 920px) {
+  .oc-studio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.oc-studio-left,
+.oc-studio-right {
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  padding: 0.95rem;
+}
+
+.oc-builder-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.8rem;
+  margin-bottom: 0.65rem;
+}
+
+.oc-builder-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink-secondary);
+  margin-bottom: 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.oc-form-row {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.oc-sm-input {
+  padding: 0.42rem 0.65rem !important;
+  font-size: 0.82rem !important;
+  flex: 1 1 120px;
+}
+
+.oc-sm-btn {
+  padding: 0.42rem 0.8rem !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+}
+
+.oc-terminal-log {
+  background: #141413;
+  color: #f2ede4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  padding: 0.75rem 0.85rem;
+  border-radius: var(--radius-sm);
+  min-height: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.oc-script-area {
+  width: 100%;
+  min-height: 220px;
+  background: #141413;
+  color: #f2ede4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.79rem;
+  line-height: 1.5;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.oc-slide-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-hairline);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.oc-slide-num {
+  position: absolute;
+  bottom: 0.65rem;
+  right: 0.9rem;
+  font-size: 0.72rem;
+  opacity: 0.55;
+  font-weight: 600;
+}
+
+.oc-doc-page {
+  background: #ffffff;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 1.75rem;
+  min-height: 320px;
+  box-shadow: var(--shadow-soft);
+  color: var(--ink-black);
+}
+
+.oc-xlsx-cell:hover {
+  background: var(--accent-soft) !important;
+}

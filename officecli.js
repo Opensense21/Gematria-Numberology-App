@@ -1,4 +1,4 @@
-// OfficeCLI (iOfficeAI/OfficeCLI) — Docs, 11 AI Agent Skills, and 30 Word/Excel/PowerPoint Examples
+// OfficeCLI (iOfficeAI/OfficeCLI) — Interactive Live Studio + Docs, 11 AI Skills, and 30 Word/Excel/PowerPoint Examples
 (function () {
   const ITEMS = [
     // Core Docs
@@ -73,11 +73,29 @@
 
   const UI = {
     en: {
-      title: 'OfficeCLI — Office Suite for AI Agents',
-      subtitle: 'Open-source single binary giving AI agents full control over Word (.docx), Excel (.xlsx), and PowerPoint (.pptx) — with built-in HTML/PNG rendering. Read all docs, 11 agent skills, and 30 CLI/Python examples right here.',
-      ghBtn: 'View on GitHub ↗',
+      title: 'OfficeCLI — Interactive Office Suite',
+      subtitle: 'Create, edit, preview, and export real Word (.docx), Excel (.xlsx), and PowerPoint (.pptx) files directly in your browser using OfficeCLI commands or the visual builder.',
+      modeStudio: '⚡ Live OfficeCLI Studio',
+      modeLibrary: '📚 Docs, 11 Skills & 30 Examples',
+      ghBtn: 'GitHub ↗',
       siteBtn: 'officecli.ai ↗',
-      relBtn: 'Releases ↗',
+      newPptx: '+ New .pptx',
+      newDocx: '+ New .docx',
+      newXlsx: '+ New .xlsx',
+      uploadBtn: '↑ Upload File',
+      downloadBtn: '↓ Download',
+      resetBtn: '↺ Reset Demo',
+      deleteFileBtn: 'Delete',
+      toolBuilder: 'Visual Builder',
+      toolTerminal: 'CLI Terminal',
+      toolScript: 'Script Runner',
+      toolOutline: 'Outline & JSON',
+      previewTitle: 'Live HTML Preview',
+      runCmdBtn: 'Run',
+      runScriptBtn: '▶ Execute Script',
+      runInStudioBtn: '▶ Run in Studio',
+      clearLogBtn: 'Clear Log',
+      cmdPlaceholder: 'Type command, e.g. officecli add q4_deck.pptx / --type slide --prop title="Hello"',
       quickTitle: 'Quick Install & 30-Second Live Preview',
       copyBtn: 'Copy',
       copiedBtn: 'Copied ✓',
@@ -93,17 +111,32 @@
       tabSh: 'CLI (.sh)',
       tabPy: 'Python (.py)',
       noCode: 'No script available for this item.',
-      statsItems: '44 Docs & Examples',
-      statsFormats: 'Word • Excel • PowerPoint',
-      statsSkills: '11 Built-in Agent Skills',
       emptySearch: 'No matching items found.'
     },
     vi: {
-      title: 'OfficeCLI — Bộ Công Cụ Office Cho AI Agents',
-      subtitle: 'File thực thi đơn lẻ mã nguồn mở giúp AI Agent toàn quyền tạo, đọc và chỉnh sửa Word (.docx), Excel (.xlsx), PowerPoint (.pptx) kèm engine render HTML/PNG. Đọc toàn bộ tài liệu, 11 kỹ năng AI và 30 ví dụ CLI/Python ngay tại đây.',
-      ghBtn: 'Xem trên GitHub ↗',
+      title: 'OfficeCLI — Trình Tạo & Chỉnh Sửa Office Trực Tiếp',
+      subtitle: 'Tạo, chỉnh sửa, xem trước trực tiếp và tải về file Word (.docx), Excel (.xlsx), PowerPoint (.pptx) thật ngay trên trình duyệt bằng lệnh OfficeCLI hoặc trình tạo trực quan.',
+      modeStudio: '⚡ OfficeCLI Studio Trực Tiếp',
+      modeLibrary: '📚 Tài Liệu, 11 Kỹ Năng & 30 Ví Dụ',
+      ghBtn: 'GitHub ↗',
       siteBtn: 'officecli.ai ↗',
-      relBtn: 'Tải Bản Phát Hành ↗',
+      newPptx: '+ Tạo .pptx',
+      newDocx: '+ Tạo .docx',
+      newXlsx: '+ Tạo .xlsx',
+      uploadBtn: '↑ Tải File Lên',
+      downloadBtn: '↓ Tải Về Máy',
+      resetBtn: '↺ Khôi Phục Mẫu',
+      deleteFileBtn: 'Xóa',
+      toolBuilder: 'Tạo Trực Quan',
+      toolTerminal: 'Dòng Lệnh CLI',
+      toolScript: 'Chạy Script',
+      toolOutline: 'Cấu Trúc & JSON',
+      previewTitle: 'Xem Trước HTML Trực Tiếp',
+      runCmdBtn: 'Chạy',
+      runScriptBtn: '▶ Chạy Script',
+      runInStudioBtn: '▶ Chạy Trong Studio',
+      clearLogBtn: 'Xóa Log',
+      cmdPlaceholder: 'Nhập lệnh, VD: officecli add q4_deck.pptx / --type slide --prop title="Xin chào"',
       quickTitle: 'Cài Đặt Nhanh & Xem Trước Trực Tiếp Trong 30 Giây',
       copyBtn: 'Sao chép',
       copiedBtn: 'Đã chép ✓',
@@ -119,18 +152,31 @@
       tabSh: 'Lệnh CLI (.sh)',
       tabPy: 'Mã Python (.py)',
       noCode: 'Mục này không có script đính kèm.',
-      statsItems: '44 Tài Liệu & Ví Dụ',
-      statsFormats: 'Word • Excel • PowerPoint',
-      statsSkills: '11 Kỹ Năng AI Tích Hợp',
       emptySearch: 'Không tìm thấy mục phù hợp.'
     }
   };
 
   let state = {
     lang: 'en',
+    mode: 'studio', // 'studio' | 'library'
+    studioTab: 'builder', // 'builder' | 'terminal' | 'script' | 'outline'
+    activeSlideIdx: 0,
+    activeSheetIdx: 0,
+    selectedCellRef: null,
+    terminalLog: [
+      'OfficeCLI In-Browser Studio ready. Active workspace loaded.',
+      'Tip: Type "help" or use the Visual Builder to edit & export real .pptx, .docx, and .xlsx files.'
+    ],
+    cmdHistory: [],
+    historyIdx: -1,
+    scriptDraft: `officecli create launch_deck.pptx
+officecli add launch_deck.pptx / --type slide --prop title="Product Launch 2026" --prop background=1A1A2E
+officecli add launch_deck.pptx "/slide[1]" --type shape --prop text="Built directly inside the browser with OfficeCLI" --prop color=FAF7F2 --prop size=22 --prop bold=true
+officecli add launch_deck.pptx / --type slide --prop title="Key Metrics" --prop background=FAF7F2
+officecli add launch_deck.pptx "/slide[2]" --type table --prop data="Metric,Q1,Q2;Users,12000,28500;Revenue,$45K,$112K"`,
     category: 'all',
     search: '',
-    activeItemKey: null, // `${group}:${id}`
+    activeItemKey: null,
     codeTab: 'md',
     installTab: 'unix'
   };
@@ -138,7 +184,7 @@
   const loadedChunks = {};
 
   function escapeHtml(str) {
-    return String(str || '')
+    return String(str ?? '')
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
@@ -157,7 +203,6 @@
 
   function markdownToHtml(md) {
     if (!md) return '';
-    // Strip YAML frontmatter if present
     let cleaned = md.replace(/^---\n[\s\S]*?\n---\n*/, '');
     const lines = cleaned.replace(/\r\n/g, '\n').split('\n');
     let html = '';
@@ -252,7 +297,6 @@
         continue;
       }
 
-      // Skip raw HTML blocks like <table> / <p align="center"> cleanly
       if (/^<\/?(table|tr|td|p|img|a|strong|em)[\s>]/i.test(trimmed) && !trimmed.startsWith('<a href')) {
         continue;
       }
@@ -321,6 +365,616 @@
     });
   }
 
+  function runCliLine(line) {
+    const E = window.OfficeCLIEngine;
+    if (!E) return;
+    const trimmed = line.trim();
+    if (!trimmed) return;
+    state.cmdHistory.unshift(trimmed);
+    state.historyIdx = -1;
+    if (trimmed === 'clear' || trimmed === 'officecli clear') {
+      state.terminalLog = [];
+      return;
+    }
+    const res = E.execCommand(trimmed);
+    state.terminalLog.push(`$ ${trimmed}`);
+    if (res.output) state.terminalLog.push(res.output);
+    if (state.terminalLog.length > 80) state.terminalLog = state.terminalLog.slice(-80);
+  }
+
+  function renderPreviewHtml(file) {
+    const E = window.OfficeCLIEngine;
+    if (!file) {
+      return `<div style="padding:2rem; text-align:center; color:var(--ink-muted);">Create or upload a .pptx, .docx, or .xlsx file to preview it here.</div>`;
+    }
+
+    if (file.type === 'pptx') {
+      const slides = file.slides || [];
+      if (!slides.length) {
+        return `<div style="padding:2.5rem; text-align:center; color:var(--ink-muted);">0 slides yet. Add a slide using the Visual Builder or run:<br/><code>officecli add ${escapeHtml(file.name)} / --type slide --prop title="Hello"</code></div>`;
+      }
+      if (state.activeSlideIdx >= slides.length) state.activeSlideIdx = slides.length - 1;
+      if (state.activeSlideIdx < 0) state.activeSlideIdx = 0;
+      const sl = slides[state.activeSlideIdx];
+      const bgHex = '#' + E.normHex(sl.background, 'FFFFFF');
+      const r = parseInt(bgHex.slice(1, 3), 16), g = parseInt(bgHex.slice(3, 5), 16), b = parseInt(bgHex.slice(5, 7), 16);
+      const isDark = (r * 0.299 + g * 0.587 + b * 0.114) < 128;
+      const defColor = isDark ? '#FFFFFF' : '#141413';
+
+      const shapesHtml = (sl.shapes || []).map((sh, idx) => {
+        if (sh.type === 'table' && Array.isArray(sh.rows)) {
+          const rowsHtml = sh.rows.map((row, rIdx) =>
+            `<tr>${row.map(c => rIdx === 0
+              ? `<th style="background:#141413; color:#fff; padding:6px 10px; font-size:0.78rem; text-align:left;">${escapeHtml(c)}</th>`
+              : `<td style="background:${rIdx % 2 ? '#faf7f2' : '#fff'}; color:#141413; padding:6px 10px; font-size:0.78rem; border-top:1px solid #e4ded2;">${escapeHtml(c)}</td>`
+            ).join('')}</tr>`
+          ).join('');
+          return `<div style="margin-top:0.75rem; overflow-x:auto;"><table style="width:100%; border-collapse:collapse; border:1px solid #e4ded2; border-radius:6px; overflow:hidden;">${rowsHtml}</table></div>`;
+        }
+        const clr = sh.color ? '#' + E.normHex(sh.color) : defColor;
+        const bg = sh.fill ? `background:#${E.normHex(sh.fill)}; padding:6px 10px; border-radius:6px;` : '';
+        const sz = Math.max(12, Math.min(34, (parseFloat(sh.size) || 18) * 0.88));
+        const fw = sh.bold ? '700' : '400';
+        const ta = sh.align || 'left';
+        return `<div style="color:${clr}; font-size:${sz}px; font-weight:${fw}; text-align:${ta}; margin-top:0.55rem; line-height:1.35; ${bg}">${escapeHtml(sh.text || '')}</div>`;
+      }).join('');
+
+      const pills = slides.map((s, i) =>
+        `<button type="button" class="btn-secondary oc-slide-pill ${i === state.activeSlideIdx ? 'active-filter' : ''}" data-sidx="${i}" style="padding:0.2rem 0.6rem; font-size:0.75rem;">Slide ${i + 1}</button>`
+      ).join('');
+
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.75rem;">
+          <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">${pills}</div>
+          <span style="font-size:0.75rem; color:var(--ink-muted);">16:9 • Slide ${state.activeSlideIdx + 1} / ${slides.length}</span>
+        </div>
+        <div class="oc-slide-stage" style="background:${bgHex}; color:${defColor};">
+          <div style="font-family:var(--font-serif); font-size:1.45rem; font-weight:700; margin-bottom:0.5rem; border-bottom:1px solid ${isDark ? 'rgba(255,255,255,0.14)' : 'rgba(20,20,19,0.1)'}; padding-bottom:0.45rem;">
+            ${escapeHtml(sl.title || `Slide ${state.activeSlideIdx + 1}`)}
+          </div>
+          <div>${shapesHtml || `<p style="opacity:0.6; font-size:0.85rem;">Empty slide — add shapes or tables from the left panel.</p>`}</div>
+          <div class="oc-slide-num">${state.activeSlideIdx + 1}</div>
+        </div>
+      `;
+    }
+
+    if (file.type === 'docx') {
+      const blocks = file.blocks || [];
+      if (!blocks.length) {
+        return `<div class="oc-doc-page"><p style="color:var(--ink-muted);">Empty Word document. Add headings, paragraphs, lists, or tables.</p></div>`;
+      }
+      const bodyHtml = blocks.map(b => {
+        if (b.type === 'heading') {
+          const tag = b.level === 1 ? 'h1' : b.level === 2 ? 'h2' : 'h3';
+          const clr = b.color ? `color:#${E.normHex(b.color)};` : '';
+          return `<${tag} style="font-family:var(--font-serif); margin:0.65rem 0 0.35rem; ${clr}">${escapeHtml(b.text)}</${tag}>`;
+        }
+        if (b.type === 'list') {
+          const tag = b.ordered ? 'ol' : 'ul';
+          const lis = (b.items || []).map(it => `<li>${escapeHtml(it)}</li>`).join('');
+          return `<${tag} style="margin:0.4rem 0 0.6rem 1.35rem;">${lis}</${tag}>`;
+        }
+        if (b.type === 'table' && Array.isArray(b.rows)) {
+          const rowsHtml = b.rows.map((row, rIdx) =>
+            `<tr>${row.map(c => rIdx === 0
+              ? `<th>${escapeHtml(c)}</th>`
+              : `<td>${escapeHtml(c)}</td>`
+            ).join('')}</tr>`
+          ).join('');
+          return `<table class="cipher-table" style="margin:0.75rem 0;">${rowsHtml}</table>`;
+        }
+        if (b.type === 'pagebreak') {
+          return `<div style="border-top:2px dashed var(--border-hairline); margin:1.25rem 0; text-align:center; font-size:0.72rem; color:var(--ink-muted);">— Page Break —</div>`;
+        }
+        const fw = b.bold ? 'font-weight:700;' : '';
+        const fs = b.italic ? 'font-style:italic;' : '';
+        const clr = b.color ? `color:#${E.normHex(b.color)};` : '';
+        const bg = b.bg ? `background:#${E.normHex(b.bg)}; padding:0.4rem 0.6rem; border-radius:4px;` : '';
+        const ta = b.align ? `text-align:${b.align};` : '';
+        return `<p style="margin:0.45rem 0; font-size:${Math.max(12, (parseFloat(b.size) || 11) * 1.25)}px; ${fw} ${fs} ${clr} ${bg} ${ta}">${escapeHtml(b.text)}</p>`;
+      }).join('');
+      return `<div class="oc-doc-page">${bodyHtml}</div>`;
+    }
+
+    if (file.type === 'xlsx') {
+      const sheets = file.sheets || [];
+      if (state.activeSheetIdx >= sheets.length) state.activeSheetIdx = 0;
+      const sheet = sheets[state.activeSheetIdx] || { name: 'Sheet1', cells: {} };
+      const cells = sheet.cells || {};
+
+      let maxR = 6, maxC = 5;
+      Object.keys(cells).forEach(ref => {
+        const p = E.parseCellRef(ref);
+        if (p) {
+          if (p.row + 2 > maxR) maxR = p.row + 2;
+          if (p.col + 2 > maxC) maxC = p.col + 2;
+        }
+      });
+      maxR = Math.min(20, maxR);
+      maxC = Math.min(10, maxC);
+
+      const sheetTabs = sheets.map((s, i) =>
+        `<button type="button" class="btn-secondary oc-sheet-pill ${i === state.activeSheetIdx ? 'active-filter' : ''}" data-shidx="${i}" style="padding:0.2rem 0.65rem; font-size:0.75rem;">${escapeHtml(s.name)}</button>`
+      ).join('');
+
+      let headCols = '<th style="width:36px; background:var(--bg-subtle);"></th>';
+      for (let c = 0; c < maxC; c++) {
+        headCols += `<th style="background:var(--bg-subtle); color:var(--ink-secondary); font-size:0.76rem; text-align:center; padding:4px 8px;">${E.indexToCol(c)}</th>`;
+      }
+
+      let rowsHtml = '';
+      for (let r = 0; r < maxR; r++) {
+        let tds = `<td style="background:var(--bg-subtle); color:var(--ink-muted); font-size:0.74rem; text-align:center; font-weight:600;">${r + 1}</td>`;
+        for (let c = 0; c < maxC; c++) {
+          const ref = E.indexToCol(c) + (r + 1);
+          const cell = cells[ref];
+          const displayVal = cell ? (cell.formula ? E.evalExcelFormula(cell.formula, cells) : (cell.value ?? '')) : '';
+          const isFormula = cell && cell.formula;
+          const bold = cell && cell.bold ? 'font-weight:700; background:var(--bg-cream);' : '';
+          const titleAttr = isFormula ? `title="${escapeHtml(cell.formula)}"` : '';
+          tds += `<td class="oc-xlsx-cell" data-ref="${ref}" ${titleAttr} style="padding:5px 8px; font-size:0.8rem; border:1px solid var(--border-hairline); min-width:74px; cursor:pointer; ${bold}">${escapeHtml(displayVal)}${isFormula ? '<span style="font-size:0.65rem; color:var(--accent-main); margin-left:3px;">ƒx</span>' : ''}</td>`;
+        }
+        rowsHtml += `<tr>${tds}</tr>`;
+      }
+
+      return `
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.65rem;">
+          <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">${sheetTabs}</div>
+          <span style="font-size:0.74rem; color:var(--ink-muted);">Click any cell to edit • Formulas (SUM, AVG, +, -, *, /) live-evaluated</span>
+        </div>
+        <div style="overflow-x:auto; border:1px solid var(--border-hairline); border-radius:8px; background:#fff;">
+          <table class="oc-xlsx-grid" style="width:100%; border-collapse:collapse;">
+            <thead><tr>${headCols}</tr></thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </div>
+      `;
+    }
+    return '';
+  }
+
+  function renderStudio(container, L) {
+    const E = window.OfficeCLIEngine;
+    const vfs = E.getVfs();
+    const fileNames = Object.keys(vfs.files);
+    const activeFile = vfs.files[vfs.activeFile] || vfs.files[fileNames[0]] || null;
+    if (activeFile && vfs.activeFile !== activeFile.name) E.setActiveFile(activeFile.name);
+
+    const fileOptions = fileNames.map(n =>
+      `<option value="${escapeHtml(n)}" ${activeFile && n === activeFile.name ? 'selected' : ''}>${escapeHtml(n)} (${vfs.files[n].type.toUpperCase()})</option>`
+    ).join('');
+
+    let leftPanelHtml = '';
+    if (state.studioTab === 'builder') {
+      if (!activeFile) {
+        leftPanelHtml = `<p style="color:var(--ink-muted);">Create a new .pptx, .docx, or .xlsx file above to start building.</p>`;
+      } else if (activeFile.type === 'pptx') {
+        const slideNum = (state.activeSlideIdx || 0) + 1;
+        leftPanelHtml = `
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">1. Add Slide</div>
+            <div class="oc-form-row">
+              <input id="ocPptSlideTitle" type="text" class="cipher-input oc-sm-input" placeholder="Slide title (e.g. Q4 Overview)" />
+              <input id="ocPptSlideBg" type="text" class="cipher-input oc-sm-input" value="1A1A2E" placeholder="Bg hex (e.g. 1A1A2E or FAF7F2)" style="max-width:130px;" />
+              <button type="button" id="ocBtnAddSlide" class="btn-primary oc-sm-btn">+ Add Slide</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">2. Add TextBox to Slide ${slideNum}</div>
+            <div class="oc-form-row">
+              <input id="ocPptShapeText" type="text" class="cipher-input oc-sm-input" placeholder="Text content..." />
+              <input id="ocPptShapeColor" type="text" class="cipher-input oc-sm-input" value="FFFFFF" placeholder="Color hex" style="max-width:105px;" />
+              <input id="ocPptShapeSize" type="number" class="cipher-input oc-sm-input" value="20" min="10" max="60" style="max-width:75px;" title="Font size (pt)" />
+              <button type="button" id="ocBtnAddShape" class="btn-primary oc-sm-btn">+ Add Text</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">3. Add Table to Slide ${slideNum}</div>
+            <div class="oc-form-row">
+              <input id="ocPptTableData" type="text" class="cipher-input oc-sm-input" value="Item,Q1,Q2;Sales,120,180;Growth,+15%,+50%" placeholder="Row1Col1,Row1Col2;Row2Col1,Row2Col2" />
+              <button type="button" id="ocBtnAddPptTable" class="btn-secondary oc-sm-btn">+ Add Table</button>
+            </div>
+          </div>
+        `;
+      } else if (activeFile.type === 'docx') {
+        leftPanelHtml = `
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">1. Add Heading</div>
+            <div class="oc-form-row">
+              <select id="ocDocHeadingLvl" class="cipher-input oc-sm-input" style="max-width:85px;">
+                <option value="1">H1</option><option value="2">H2</option><option value="3">H3</option>
+              </select>
+              <input id="ocDocHeadingText" type="text" class="cipher-input oc-sm-input" placeholder="Heading text..." />
+              <button type="button" id="ocBtnAddHeading" class="btn-primary oc-sm-btn">+ Heading</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">2. Add Paragraph</div>
+            <div class="oc-form-row">
+              <input id="ocDocParaText" type="text" class="cipher-input oc-sm-input" placeholder="Write paragraph text..." />
+              <label style="font-size:0.78rem; display:flex; align-items:center; gap:4px;"><input id="ocDocParaBold" type="checkbox" /> Bold</label>
+              <button type="button" id="ocBtnAddPara" class="btn-primary oc-sm-btn">+ Paragraph</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">3. Add List or Table</div>
+            <div class="oc-form-row" style="margin-bottom:0.45rem;">
+              <input id="ocDocListItems" type="text" class="cipher-input oc-sm-input" placeholder="List items separated by ; (e.g. First; Second; Third)" />
+              <button type="button" id="ocBtnAddList" class="btn-secondary oc-sm-btn">+ List</button>
+            </div>
+            <div class="oc-form-row">
+              <input id="ocDocTableData" type="text" class="cipher-input oc-sm-input" value="Task,Owner,Status;Design,Alice,Done;Launch,Bob,In Progress" />
+              <button type="button" id="ocBtnAddDocTable" class="btn-secondary oc-sm-btn">+ Table</button>
+            </div>
+          </div>
+        `;
+      } else if (activeFile.type === 'xlsx') {
+        const shNum = (state.activeSheetIdx || 0) + 1;
+        const selRef = state.selectedCellRef || 'B2';
+        const curSheet = activeFile.sheets[state.activeSheetIdx] || activeFile.sheets[0];
+        const curCell = curSheet && curSheet.cells ? curSheet.cells[selRef] : null;
+        const curVal = curCell ? (curCell.formula || curCell.value || '') : '';
+        leftPanelHtml = `
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">1. Set Cell Value or Formula (Sheet ${shNum})</div>
+            <div class="oc-form-row">
+              <input id="ocXlsRef" type="text" class="cipher-input oc-sm-input" value="${escapeHtml(selRef)}" placeholder="Ref (A1)" style="max-width:75px; text-transform:uppercase;" />
+              <input id="ocXlsVal" type="text" class="cipher-input oc-sm-input" value="${escapeHtml(curVal)}" placeholder="Value or =SUM(B2:B4)" />
+              <label style="font-size:0.78rem; display:flex; align-items:center; gap:4px;"><input id="ocXlsBold" type="checkbox" ${curCell && curCell.bold ? 'checked' : ''} /> Bold</label>
+              <button type="button" id="ocBtnSetCell" class="btn-primary oc-sm-btn">Set Cell</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">2. Insert Row</div>
+            <div class="oc-form-row">
+              <input id="ocXlsRowNum" type="number" class="cipher-input oc-sm-input" value="6" min="1" style="max-width:75px;" />
+              <input id="ocXlsRowVals" type="text" class="cipher-input oc-sm-input" value="Marketing,450,520,=B6+C6" placeholder="Comma-separated values" />
+              <button type="button" id="ocBtnAddRow" class="btn-secondary oc-sm-btn">+ Row</button>
+            </div>
+          </div>
+          <div class="oc-builder-box">
+            <div class="oc-builder-title">3. Add Worksheet</div>
+            <div class="oc-form-row">
+              <input id="ocXlsSheetName" type="text" class="cipher-input oc-sm-input" placeholder="New sheet name (e.g. Q3_Forecast)" />
+              <button type="button" id="ocBtnAddSheet" class="btn-secondary oc-sm-btn">+ Sheet</button>
+            </div>
+          </div>
+        `;
+      }
+    } else if (state.studioTab === 'terminal') {
+      const fName = activeFile ? activeFile.name : 'demo.pptx';
+      leftPanelHtml = `
+        <div class="oc-terminal-log" id="ocTermLog">${escapeHtml(state.terminalLog.join('\n'))}</div>
+        <div class="oc-form-row" style="margin-top:0.55rem;">
+          <input id="ocTermInput" type="text" class="cipher-input oc-sm-input" style="font-family:monospace; font-size:0.82rem;" placeholder="${escapeHtml(L.cmdPlaceholder)}" />
+          <button type="button" id="ocTermRunBtn" class="btn-primary oc-sm-btn">${L.runCmdBtn}</button>
+          <button type="button" id="ocTermClearBtn" class="btn-secondary oc-sm-btn">${L.clearLogBtn}</button>
+        </div>
+        <div style="display:flex; gap:0.35rem; flex-wrap:wrap; margin-top:0.5rem;">
+          <button type="button" class="btn-secondary oc-chip-cmd" data-cmd="officecli ls" style="padding:0.18rem 0.5rem; font-size:0.72rem;">ls</button>
+          <button type="button" class="btn-secondary oc-chip-cmd" data-cmd="officecli view ${escapeHtml(fName)} outline" style="padding:0.18rem 0.5rem; font-size:0.72rem;">view outline</button>
+          <button type="button" class="btn-secondary oc-chip-cmd" data-cmd="officecli get ${escapeHtml(fName)} / --json" style="padding:0.18rem 0.5rem; font-size:0.72rem;">get --json</button>
+          <button type="button" class="btn-secondary oc-chip-cmd" data-cmd="officecli help" style="padding:0.18rem 0.5rem; font-size:0.72rem;">help</button>
+        </div>
+      `;
+    } else if (state.studioTab === 'script') {
+      leftPanelHtml = `
+        <textarea id="ocScriptArea" class="oc-script-area">${escapeHtml(state.scriptDraft)}</textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:0.55rem; gap:0.5rem;">
+          <span style="font-size:0.76rem; color:var(--ink-muted);">Supports multi-line <code>officecli</code> commands &amp; <code>\\</code> continuations.</span>
+          <button type="button" id="ocRunScriptBtn" class="btn-primary oc-sm-btn">${L.runScriptBtn}</button>
+        </div>
+      `;
+    } else if (state.studioTab === 'outline') {
+      const outline = activeFile ? E.getOutlineText(activeFile) : '';
+      const jsonStr = activeFile ? JSON.stringify(activeFile, null, 2) : '{}';
+      leftPanelHtml = `
+        <div style="font-size:0.78rem; font-weight:600; color:var(--ink-secondary); margin-bottom:0.35rem;">Outline (<code>officecli view ${escapeHtml(activeFile ? activeFile.name : '')} outline</code>)</div>
+        <pre class="oc-terminal-log" style="max-height:140px; margin-bottom:0.75rem;">${escapeHtml(outline)}</pre>
+        <div style="font-size:0.78rem; font-weight:600; color:var(--ink-secondary); margin-bottom:0.35rem;">Document JSON (<code>officecli get / --json</code>)</div>
+        <pre class="oc-terminal-log" style="max-height:200px;">${escapeHtml(jsonStr)}</pre>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="sacred-card">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1rem; margin-bottom:1rem;">
+          <div>
+            <h2 style="font-family:var(--font-serif); font-size:1.55rem; color:var(--ink-black); margin-bottom:0.3rem;">${L.title}</h2>
+            <p style="color:var(--ink-secondary); max-width:780px; margin-bottom:0.75rem;">${L.subtitle}</p>
+            <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+              <button type="button" id="ocModeStudio" class="btn-secondary active-filter">${L.modeStudio}</button>
+              <button type="button" id="ocModeLibrary" class="btn-secondary">${L.modeLibrary}</button>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <a href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none;">${L.ghBtn}</a>
+            <a href="https://officecli.ai" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none;">${L.siteBtn}</a>
+          </div>
+        </div>
+
+        <!-- Workspace Toolbar -->
+        <div class="oc-toolbar">
+          <div style="display:flex; gap:0.45rem; align-items:center; flex-wrap:wrap;">
+            <select id="ocFileSelect" class="cipher-input oc-sm-input" style="min-width:200px; font-weight:600;">${fileOptions}</select>
+            <button type="button" id="ocNewPptx" class="btn-secondary oc-sm-btn">${L.newPptx}</button>
+            <button type="button" id="ocNewDocx" class="btn-secondary oc-sm-btn">${L.newDocx}</button>
+            <button type="button" id="ocNewXlsx" class="btn-secondary oc-sm-btn">${L.newXlsx}</button>
+          </div>
+          <div style="display:flex; gap:0.45rem; align-items:center; flex-wrap:wrap;">
+            <input id="ocUploadInput" type="file" accept=".pptx,.docx,.xlsx" style="display:none;" />
+            <button type="button" id="ocUploadBtn" class="btn-secondary oc-sm-btn">${L.uploadBtn}</button>
+            <button type="button" id="ocDownloadBtn" class="btn-primary oc-sm-btn">${L.downloadBtn} ${activeFile ? escapeHtml(activeFile.name) : ''}</button>
+            ${fileNames.length > 1 ? `<button type="button" id="ocDeleteFileBtn" class="btn-ghost oc-sm-btn">${L.deleteFileBtn}</button>` : ''}
+            <button type="button" id="ocResetBtn" class="btn-ghost oc-sm-btn">${L.resetBtn}</button>
+          </div>
+        </div>
+
+        <!-- Split Studio Grid -->
+        <div class="oc-studio-grid">
+          <div class="oc-studio-left">
+            <div style="display:flex; gap:0.35rem; flex-wrap:wrap; margin-bottom:0.85rem; padding-bottom:0.65rem; border-bottom:1px solid var(--border-hairline);">
+              <button type="button" class="btn-secondary oc-stab ${state.studioTab === 'builder' ? 'active-filter' : ''}" data-stab="builder" style="padding:0.3rem 0.7rem; font-size:0.78rem;">${L.toolBuilder}</button>
+              <button type="button" class="btn-secondary oc-stab ${state.studioTab === 'terminal' ? 'active-filter' : ''}" data-stab="terminal" style="padding:0.3rem 0.7rem; font-size:0.78rem;">${L.toolTerminal}</button>
+              <button type="button" class="btn-secondary oc-stab ${state.studioTab === 'script' ? 'active-filter' : ''}" data-stab="script" style="padding:0.3rem 0.7rem; font-size:0.78rem;">${L.toolScript}</button>
+              <button type="button" class="btn-secondary oc-stab ${state.studioTab === 'outline' ? 'active-filter' : ''}" data-stab="outline" style="padding:0.3rem 0.7rem; font-size:0.78rem;">${L.toolOutline}</button>
+            </div>
+            ${leftPanelHtml}
+          </div>
+
+          <div class="oc-studio-right">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.65rem; padding-bottom:0.55rem; border-bottom:1px solid var(--border-hairline);">
+              <span style="font-size:0.82rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--ink-secondary);">${L.previewTitle}</span>
+              <span class="badge">${activeFile ? escapeHtml(activeFile.type.toUpperCase()) : 'NONE'}</span>
+            </div>
+            ${renderPreviewHtml(activeFile)}
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Mode Switcher
+    document.getElementById('ocModeLibrary').addEventListener('click', () => { state.mode = 'library'; render(); });
+
+    // Workspace Toolbar Events
+    const fileSel = document.getElementById('ocFileSelect');
+    if (fileSel) {
+      fileSel.addEventListener('change', (e) => {
+        E.setActiveFile(e.target.value);
+        state.activeSlideIdx = 0;
+        state.activeSheetIdx = 0;
+        state.selectedCellRef = null;
+        render();
+      });
+    }
+
+    function createNew(ext) {
+      const base = ext === 'pptx' ? 'deck' : ext === 'docx' ? 'doc' : 'sheet';
+      let i = 1;
+      while (vfs.files[`${base}_${i}.${ext}`]) i++;
+      const name = `${base}_${i}.${ext}`;
+      runCliLine(`officecli create ${name}`);
+      state.activeSlideIdx = 0;
+      state.activeSheetIdx = 0;
+      render();
+    }
+    document.getElementById('ocNewPptx').addEventListener('click', () => createNew('pptx'));
+    document.getElementById('ocNewDocx').addEventListener('click', () => createNew('docx'));
+    document.getElementById('ocNewXlsx').addEventListener('click', () => createNew('xlsx'));
+
+    const upInput = document.getElementById('ocUploadInput');
+    document.getElementById('ocUploadBtn').addEventListener('click', () => upInput.click());
+    upInput.addEventListener('change', async (e) => {
+      const f = e.target.files[0];
+      if (!f) return;
+      try {
+        const buf = await f.arrayBuffer();
+        const doc = await E.importOfficeFile(f.name, buf);
+        E.addImportedFile(doc);
+        state.terminalLog.push(`✓ Uploaded & parsed ${f.name}`);
+        state.activeSlideIdx = 0;
+        state.activeSheetIdx = 0;
+        render();
+      } catch (err) {
+        state.terminalLog.push(`✗ Upload error: ${err.message}`);
+        state.studioTab = 'terminal';
+        render();
+      }
+    });
+
+    document.getElementById('ocDownloadBtn').addEventListener('click', () => {
+      if (!activeFile) return;
+      const bytes = E.exportBinary(activeFile.name);
+      const mimeMap = {
+        pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      };
+      const blob = new Blob([bytes], { type: mimeMap[activeFile.type] || 'application/octet-stream' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = activeFile.name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    const delBtn = document.getElementById('ocDeleteFileBtn');
+    if (delBtn) {
+      delBtn.addEventListener('click', () => {
+        if (activeFile) E.deleteFile(activeFile.name);
+        render();
+      });
+    }
+
+    document.getElementById('ocResetBtn').addEventListener('click', () => {
+      E.resetVfs();
+      state.activeSlideIdx = 0;
+      state.activeSheetIdx = 0;
+      state.terminalLog = ['↺ Workspace reset to demo files (q4_deck.pptx, project_brief.docx, budget_2026.xlsx).'];
+      render();
+    });
+
+    // Studio Left Sub-tabs
+    container.querySelectorAll('.oc-stab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.studioTab = btn.getAttribute('data-stab');
+        render();
+      });
+    });
+
+    // Preview Interactive Controls
+    container.querySelectorAll('.oc-slide-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activeSlideIdx = parseInt(btn.getAttribute('data-sidx'), 10);
+        render();
+      });
+    });
+    container.querySelectorAll('.oc-sheet-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.activeSheetIdx = parseInt(btn.getAttribute('data-shidx'), 10);
+        render();
+      });
+    });
+    container.querySelectorAll('.oc-xlsx-cell').forEach(td => {
+      td.addEventListener('click', () => {
+        state.selectedCellRef = td.getAttribute('data-ref');
+        state.studioTab = 'builder';
+        render();
+      });
+    });
+
+    // Visual Builder Actions
+    if (state.studioTab === 'builder' && activeFile) {
+      if (activeFile.type === 'pptx') {
+        const sIdx = (state.activeSlideIdx || 0) + 1;
+        document.getElementById('ocBtnAddSlide').addEventListener('click', () => {
+          const t = document.getElementById('ocPptSlideTitle').value.trim() || `Slide ${activeFile.slides.length + 1}`;
+          const bg = document.getElementById('ocPptSlideBg').value.trim() || '1A1A2E';
+          runCliLine(`officecli add ${activeFile.name} / --type slide --prop title="${t.replace(/"/g, '\\"')}" --prop background=${bg}`);
+          state.activeSlideIdx = activeFile.slides.length - 1;
+          render();
+        });
+        document.getElementById('ocBtnAddShape').addEventListener('click', () => {
+          const txt = document.getElementById('ocPptShapeText').value.trim();
+          if (!txt) return;
+          const clr = document.getElementById('ocPptShapeColor').value.trim() || 'FFFFFF';
+          const sz = document.getElementById('ocPptShapeSize').value || '20';
+          runCliLine(`officecli add ${activeFile.name} "/slide[${sIdx}]" --type shape --prop text="${txt.replace(/"/g, '\\"')}" --prop color=${clr} --prop size=${sz}`);
+          render();
+        });
+        document.getElementById('ocBtnAddPptTable').addEventListener('click', () => {
+          const data = document.getElementById('ocPptTableData').value.trim();
+          runCliLine(`officecli add ${activeFile.name} "/slide[${sIdx}]" --type table --prop data="${data.replace(/"/g, '\\"')}"`);
+          render();
+        });
+      } else if (activeFile.type === 'docx') {
+        document.getElementById('ocBtnAddHeading').addEventListener('click', () => {
+          const lvl = document.getElementById('ocDocHeadingLvl').value;
+          const txt = document.getElementById('ocDocHeadingText').value.trim();
+          if (!txt) return;
+          runCliLine(`officecli add ${activeFile.name} / --type heading --prop level=${lvl} --prop text="${txt.replace(/"/g, '\\"')}"`);
+          render();
+        });
+        document.getElementById('ocBtnAddPara').addEventListener('click', () => {
+          const txt = document.getElementById('ocDocParaText').value.trim();
+          if (!txt) return;
+          const bold = document.getElementById('ocDocParaBold').checked;
+          runCliLine(`officecli add ${activeFile.name} / --type paragraph --prop text="${txt.replace(/"/g, '\\"')}" --prop bold=${bold}`);
+          render();
+        });
+        document.getElementById('ocBtnAddList').addEventListener('click', () => {
+          const items = document.getElementById('ocDocListItems').value.trim();
+          if (!items) return;
+          runCliLine(`officecli add ${activeFile.name} / --type list --prop items="${items.replace(/"/g, '\\"')}"`);
+          render();
+        });
+        document.getElementById('ocBtnAddDocTable').addEventListener('click', () => {
+          const data = document.getElementById('ocDocTableData').value.trim();
+          runCliLine(`officecli add ${activeFile.name} / --type table --prop data="${data.replace(/"/g, '\\"')}"`);
+          render();
+        });
+      } else if (activeFile.type === 'xlsx') {
+        const shNum = (state.activeSheetIdx || 0) + 1;
+        document.getElementById('ocBtnSetCell').addEventListener('click', () => {
+          const ref = document.getElementById('ocXlsRef').value.trim().toUpperCase();
+          const val = document.getElementById('ocXlsVal').value.trim();
+          const bold = document.getElementById('ocXlsBold').checked;
+          if (!ref) return;
+          state.selectedCellRef = ref;
+          runCliLine(`officecli add ${activeFile.name} "/sheet[${shNum}]" --type cell --prop ref=${ref} --prop value="${val.replace(/"/g, '\\"')}" --prop bold=${bold}`);
+          render();
+        });
+        document.getElementById('ocBtnAddRow').addEventListener('click', () => {
+          const row = document.getElementById('ocXlsRowNum').value;
+          const vals = document.getElementById('ocXlsRowVals').value.trim();
+          runCliLine(`officecli add ${activeFile.name} "/sheet[${shNum}]" --type row --prop row=${row} --prop values="${vals.replace(/"/g, '\\"')}"`);
+          render();
+        });
+        document.getElementById('ocBtnAddSheet').addEventListener('click', () => {
+          const name = document.getElementById('ocXlsSheetName').value.trim() || `Sheet${activeFile.sheets.length + 1}`;
+          runCliLine(`officecli add ${activeFile.name} / --type sheet --prop name="${name.replace(/"/g, '\\"')}"`);
+          state.activeSheetIdx = activeFile.sheets.length - 1;
+          render();
+        });
+      }
+    }
+
+    // Terminal Actions
+    if (state.studioTab === 'terminal') {
+      const logEl = document.getElementById('ocTermLog');
+      if (logEl) logEl.scrollTop = logEl.scrollHeight;
+      const inp = document.getElementById('ocTermInput');
+      const runFn = () => {
+        if (!inp || !inp.value.trim()) return;
+        runCliLine(inp.value);
+        render();
+        const nextInp = document.getElementById('ocTermInput');
+        if (nextInp) nextInp.focus();
+      };
+      document.getElementById('ocTermRunBtn').addEventListener('click', runFn);
+      document.getElementById('ocTermClearBtn').addEventListener('click', () => {
+        state.terminalLog = [];
+        render();
+      });
+      if (inp) {
+        inp.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') { e.preventDefault(); runFn(); }
+          else if (e.key === 'ArrowUp' && state.cmdHistory.length) {
+            e.preventDefault();
+            state.historyIdx = Math.min(state.cmdHistory.length - 1, state.historyIdx + 1);
+            inp.value = state.cmdHistory[state.historyIdx];
+          } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            state.historyIdx = Math.max(-1, state.historyIdx - 1);
+            inp.value = state.historyIdx >= 0 ? state.cmdHistory[state.historyIdx] : '';
+          }
+        });
+      }
+      container.querySelectorAll('.oc-chip-cmd').forEach(chip => {
+        chip.addEventListener('click', () => {
+          runCliLine(chip.getAttribute('data-cmd'));
+          render();
+        });
+      });
+    }
+
+    // Script Runner Actions
+    if (state.studioTab === 'script') {
+      const area = document.getElementById('ocScriptArea');
+      if (area) area.addEventListener('input', (e) => { state.scriptDraft = e.target.value; });
+      document.getElementById('ocRunScriptBtn').addEventListener('click', () => {
+        const out = E.execScript(state.scriptDraft);
+        state.terminalLog.push(out);
+        state.activeSlideIdx = 0;
+        state.activeSheetIdx = 0;
+        render();
+      });
+    }
+  }
+
   function renderReader(container, L) {
     const idx = ITEMS.findIndex(i => itemKey(i) === state.activeItemKey);
     const item = ITEMS[idx];
@@ -341,9 +995,12 @@
     } else if (state.codeTab === 'sh') {
       contentHtml = `
         <div class="cs-code-block" style="margin-top:0.75rem;">
-          <div class="cs-code-lang" style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="cs-code-lang" style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem;">
             <span>bash — ${escapeHtml(item.id)}.sh</span>
-            <button type="button" class="btn-secondary" id="ocCopyCodeBtn" style="padding:0.2rem 0.6rem; font-size:0.74rem;">${L.copyBtn}</button>
+            <div style="display:flex; gap:0.4rem;">
+              <button type="button" class="btn-primary" id="ocRunExampleBtn" style="padding:0.2rem 0.65rem; font-size:0.74rem;">${L.runInStudioBtn}</button>
+              <button type="button" class="btn-secondary" id="ocCopyCodeBtn" style="padding:0.2rem 0.6rem; font-size:0.74rem;">${L.copyBtn}</button>
+            </div>
           </div>
           <pre><code>${escapeHtml(entry.sh || L.noCode)}</code></pre>
         </div>`;
@@ -403,6 +1060,21 @@
       });
     });
 
+    const runExBtn = document.getElementById('ocRunExampleBtn');
+    if (runExBtn && entry.sh) {
+      runExBtn.addEventListener('click', () => {
+        state.scriptDraft = entry.sh;
+        const out = window.OfficeCLIEngine.execScript(entry.sh);
+        state.terminalLog.push(out);
+        state.activeItemKey = null;
+        state.mode = 'studio';
+        state.studioTab = 'terminal';
+        state.activeSlideIdx = 0;
+        state.activeSheetIdx = 0;
+        render();
+      });
+    }
+
     const copyCodeBtn = document.getElementById('ocCopyCodeBtn');
     if (copyCodeBtn) {
       copyCodeBtn.addEventListener('click', () => {
@@ -419,6 +1091,11 @@
     const container = document.getElementById('officeCliContainer');
     if (!container) return;
     const L = UI[state.lang] || UI.en;
+
+    if (state.mode === 'studio') {
+      renderStudio(container, L);
+      return;
+    }
 
     if (state.activeItemKey) {
       renderReader(container, L);
@@ -458,15 +1135,13 @@
             <h2 style="font-family:var(--font-serif); font-size:1.55rem; color:var(--ink-black); margin-bottom:0.35rem;">${L.title}</h2>
             <p style="color:var(--ink-secondary); max-width:780px; margin-bottom:0.75rem;">${L.subtitle}</p>
             <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
-              <span class="badge">${L.statsItems}</span>
-              <span class="badge">${L.statsFormats}</span>
-              <span class="badge">${L.statsSkills}</span>
+              <button type="button" id="ocModeStudio" class="btn-secondary">${L.modeStudio}</button>
+              <button type="button" id="ocModeLibrary" class="btn-secondary active-filter">${L.modeLibrary}</button>
             </div>
           </div>
           <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
             <a href="https://github.com/iOfficeAI/OfficeCLI" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none;">${L.ghBtn}</a>
             <a href="https://officecli.ai" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none;">${L.siteBtn}</a>
-            <a href="https://github.com/iOfficeAI/OfficeCLI/releases" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration:none;">${L.relBtn}</a>
           </div>
         </div>
 
@@ -501,6 +1176,8 @@
         </div>
       </div>
     `;
+
+    document.getElementById('ocModeStudio').addEventListener('click', () => { state.mode = 'studio'; render(); });
 
     container.querySelectorAll('.oc-inst-tab').forEach(btn => {
       btn.addEventListener('click', () => {
