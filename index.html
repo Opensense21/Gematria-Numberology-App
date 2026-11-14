@@ -28,7 +28,6 @@
         <button type="button" id="appTabNum" class="app-tab-btn active" data-app="app-numerology">Numerology &amp; Gematria</button>
         <button type="button" id="appTabCs" class="app-tab-btn" data-app="app-cs249r">Harvard CS249r Textbook</button>
         <button type="button" id="appTabAi" class="app-tab-btn" data-app="app-aiagents">AI Agents for Beginners</button>
-        <button type="button" id="appTabOffice" class="app-tab-btn" data-app="app-officecli">OfficeCLI</button>
       </nav>
     </div>
 
@@ -159,11 +158,6 @@
     <div id="app-aiagents" class="app-workspace">
       <div id="aiAgentsContainer"></div>
     </div>
-
-    <!-- APP TAB 4: iOfficeAI/OfficeCLI -->
-    <div id="app-officecli" class="app-workspace">
-      <div id="officeCliContainer"></div>
-    </div>
   </main>
 
   <script src="knowledge.js"></script>
@@ -171,8 +165,6 @@
   <script src="app.js"></script>
   <script src="cs249r.js"></script>
   <script src="ai_agents.js"></script>
-  <script src="officecli_engine.js"></script>
-  <script src="officecli.js"></script>
   <script>
     (function () {
       const wordInput = document.getElementById('wordInput');
@@ -1035,7 +1027,6 @@
           renderAll();
           if (window.renderCS249r) window.renderCS249r(currentLang);
           if (window.renderAiAgents) window.renderAiAgents(currentLang);
-          if (window.renderOfficeCli) window.renderOfficeCli(currentLang);
         });
       });
 
@@ -1076,7 +1067,6 @@
       renderAll();
       if (window.renderCS249r) window.renderCS249r(currentLang);
       if (window.renderAiAgents) window.renderAiAgents(currentLang);
-      if (window.renderOfficeCli) window.renderOfficeCli(currentLang);
     })();
   </script>
 </body>
