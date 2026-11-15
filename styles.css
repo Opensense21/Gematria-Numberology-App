@@ -1101,3 +1101,54 @@ code {
     font-size: 0.8rem;
   }
 }
+
+/* ==================== MarkItDown Converter ==================== */
+.mkd-dropzone {
+  border: 2px dashed var(--border-hairline);
+  background: var(--bg-cream);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.18s, background-color 0.18s;
+}
+
+.mkd-dropzone:hover,
+.mkd-dropzone.dragover {
+  border-color: var(--ink-black);
+  background: var(--bg-subtle);
+}
+
+.mkd-paste-area {
+  width: 100%;
+  min-height: 150px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--ink-black);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.mkd-raw-output {
+  background: #141413;
+  color: #f2ede4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius-sm);
+  max-height: 460px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.mkd-preview-box {
+  max-height: 460px;
+  overflow-y: auto;
+  padding: 0.5rem 0.25rem;
+}

@@ -28,6 +28,7 @@
         <button type="button" id="appTabNum" class="app-tab-btn active" data-app="app-numerology">Numerology &amp; Gematria</button>
         <button type="button" id="appTabCs" class="app-tab-btn" data-app="app-cs249r">Harvard CS249r Textbook</button>
         <button type="button" id="appTabAi" class="app-tab-btn" data-app="app-aiagents">AI Agents for Beginners</button>
+        <button type="button" id="appTabMkd" class="app-tab-btn" data-app="app-markitdown">MarkItDown (.md)</button>
       </nav>
     </div>
 
@@ -158,6 +159,11 @@
     <div id="app-aiagents" class="app-workspace">
       <div id="aiAgentsContainer"></div>
     </div>
+
+    <!-- APP TAB 4: Microsoft MarkItDown -->
+    <div id="app-markitdown" class="app-workspace">
+      <div id="markitdownContainer"></div>
+    </div>
   </main>
 
   <script src="knowledge.js"></script>
@@ -165,6 +171,8 @@
   <script src="app.js"></script>
   <script src="cs249r.js"></script>
   <script src="ai_agents.js"></script>
+  <script src="markitdown_engine.js"></script>
+  <script src="markitdown.js"></script>
   <script>
     (function () {
       const wordInput = document.getElementById('wordInput');
@@ -1027,6 +1035,7 @@
           renderAll();
           if (window.renderCS249r) window.renderCS249r(currentLang);
           if (window.renderAiAgents) window.renderAiAgents(currentLang);
+          if (window.renderMarkItDown) window.renderMarkItDown(currentLang);
         });
       });
 
@@ -1067,6 +1076,7 @@
       renderAll();
       if (window.renderCS249r) window.renderCS249r(currentLang);
       if (window.renderAiAgents) window.renderAiAgents(currentLang);
+      if (window.renderMarkItDown) window.renderMarkItDown(currentLang);
     })();
   </script>
 </body>
