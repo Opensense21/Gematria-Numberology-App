@@ -497,7 +497,43 @@
     return parts.join('\n\n---\n\n');
   }
 
-  // ==================== PDF -> Markdown (Pure-JS Stream Extractor) ====================
+  // ==================== PDF -> Markdown (pdf.js + Pure-JS Fallback) ====================
+  function loadScriptOnce(src) {
+    return new Promise((resolve, reject) => {
+      const existing = document.querySelector(`script[src="${src}"]`);
+      if (existing) { resolve(); return; }
+      const s = document.createElement('script');
+      s.src = src;
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error('Failed to load ' + src));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensurePdfJs() {
+    if (global.pdfjsLib) return global.pdfjsLib;
+    const sources = [
+      {
+        lib: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',
+        worker: 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'
+      },
+      {
+        lib: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js',
+        worker: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js'
+      }
+    ];
+    for (const src of sources) {
+      try {
+        await loadScriptOnce(src.lib);
+        if (global.pdfjsLib) {
+          global.pdfjsLib.GlobalWorkerOptions.workerSrc = src.worker;
+          return global.pdfjsLib;
+        }
+      } catch { /* try next CDN */ }
+    }
+    return null;
+  }
+
   function decodePdfLiteral(s) {
     return s
       .replace(/\\n/g, '\n')
@@ -510,7 +546,6 @@
 
   function extractTextFromPdfStream(streamText) {
     const chunks = [];
-    // Match TJ arrays and Tj strings inside BT ... ET blocks or anywhere in content stream
     const tjArrayRe = /\[([^\]]*)\]\s*TJ/g;
     let m;
     while ((m = tjArrayRe.exec(streamText)) !== null) {
@@ -529,12 +564,11 @@
     return chunks.join(' ').replace(/\s+/g, ' ').trim();
   }
 
-  async function pdfToMd(arrayBuffer) {
+  async function pdfFallbackToMd(arrayBuffer) {
     const u8 = new Uint8Array(arrayBuffer);
     const latin = new TextDecoder('latin1').decode(u8);
     const pagesText = [];
 
-    // Locate stream ... endstream blocks
     let idx = 0;
     while (true) {
       const sPos = latin.indexOf('stream', idx);
@@ -564,9 +598,77 @@
     }
 
     if (!pagesText.length) {
-      return '> *(No selectable text streams found in this PDF — it may be a scanned/image-only PDF or use custom font encodings.)*';
+      return '> *(No selectable text found in this PDF — it may be a scanned/image-only PDF.)*';
     }
     return pagesText.join('\n\n');
+  }
+
+  async function pdfToMd(arrayBuffer) {
+    const pdfjsLib = await ensurePdfJs();
+    if (!pdfjsLib) {
+      return pdfFallbackToMd(arrayBuffer);
+    }
+
+    let pdfDoc;
+    try {
+      pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer) }).promise;
+    } catch {
+      // Retry without worker if worker CORS/blocked
+      pdfDoc = await pdfjsLib.getDocument({ data: new Uint8Array(arrayBuffer), disableWorker: true }).promise;
+    }
+
+    const pageBlocks = [];
+    for (let p = 1; p <= pdfDoc.numPages; p++) {
+      const page = await pdfDoc.getPage(p);
+      const tc = await page.getTextContent();
+      const items = (tc.items || []).filter(it => it.str && it.str.trim());
+      if (!items.length) continue;
+
+      // Estimate median body font size
+      const heights = items.map(it => Math.abs(it.transform ? it.transform[3] : it.height || 10)).sort((a, b) => a - b);
+      const medianH = heights[Math.floor(heights.length / 2)] || 10;
+
+      // Group items by Y coordinate (tolerance 3pt)
+      const lines = [];
+      for (const it of items) {
+        const x = it.transform ? it.transform[4] : 0;
+        const y = it.transform ? it.transform[5] : 0;
+        const h = Math.abs(it.transform ? it.transform[3] : it.height || 10);
+        let line = lines.find(l => Math.abs(l.y - y) <= 3.5);
+        if (!line) {
+          line = { y, items: [], maxH: h };
+          lines.push(line);
+        }
+        line.items.push({ x, str: it.str, h });
+        if (h > line.maxH) line.maxH = h;
+      }
+
+      // Sort top-to-bottom (descending Y in PDF coords), then left-to-right
+      lines.sort((a, b) => b.y - a.y);
+      const formattedLines = [];
+      for (const line of lines) {
+        line.items.sort((a, b) => a.x - b.x);
+        const text = line.items.map(i => i.str).join(' ').replace(/\s+/g, ' ').trim();
+        if (!text) continue;
+        if (line.maxH >= medianH * 1.45 && text.length < 140) {
+          formattedLines.push(`## ${text}`);
+        } else if (line.maxH >= medianH * 1.2 && text.length < 140) {
+          formattedLines.push(`### ${text}`);
+        } else {
+          formattedLines.push(text);
+        }
+      }
+
+      if (formattedLines.length) {
+        const header = pdfDoc.numPages > 1 ? `<!-- Page ${p} -->\n` : '';
+        pageBlocks.push(header + formattedLines.join('\n\n'));
+      }
+    }
+
+    if (!pageBlocks.length) {
+      return '> *(No selectable text found in this PDF — it may be a scanned/image-only PDF.)*';
+    }
+    return pageBlocks.join('\n\n---\n\n');
   }
 
   // ==================== Jupyter Notebook (.ipynb) -> Markdown ====================
