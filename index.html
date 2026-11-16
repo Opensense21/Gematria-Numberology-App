@@ -29,6 +29,7 @@
         <button type="button" id="appTabCs" class="app-tab-btn" data-app="app-cs249r">Harvard CS249r Textbook</button>
         <button type="button" id="appTabAi" class="app-tab-btn" data-app="app-aiagents">AI Agents for Beginners</button>
         <button type="button" id="appTabMkd" class="app-tab-btn" data-app="app-markitdown">MarkItDown (.md)</button>
+        <button type="button" id="appTabThreeBody" class="app-tab-btn" data-app="app-threebody">Three Body Problem</button>
       </nav>
     </div>
 
@@ -164,6 +165,11 @@
     <div id="app-markitdown" class="app-workspace">
       <div id="markitdownContainer"></div>
     </div>
+
+    <!-- APP TAB 5: Three Body Problem -->
+    <div id="app-threebody" class="app-workspace">
+      <div id="threeBodyContainer"></div>
+    </div>
   </main>
 
   <script src="knowledge.js"></script>
@@ -173,6 +179,8 @@
   <script src="ai_agents.js"></script>
   <script src="markitdown_engine.js"></script>
   <script src="markitdown.js"></script>
+  <script src="three_body_data.js"></script>
+  <script src="three_body.js"></script>
   <script>
     (function () {
       const wordInput = document.getElementById('wordInput');
@@ -1036,6 +1044,7 @@
           if (window.renderCS249r) window.renderCS249r(currentLang);
           if (window.renderAiAgents) window.renderAiAgents(currentLang);
           if (window.renderMarkItDown) window.renderMarkItDown(currentLang);
+          if (window.renderThreeBody) window.renderThreeBody(currentLang);
         });
       });
 
@@ -1077,6 +1086,7 @@
       if (window.renderCS249r) window.renderCS249r(currentLang);
       if (window.renderAiAgents) window.renderAiAgents(currentLang);
       if (window.renderMarkItDown) window.renderMarkItDown(currentLang);
+      if (window.renderThreeBody) window.renderThreeBody(currentLang);
     })();
   </script>
 </body>
