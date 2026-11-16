@@ -1,5 +1,4 @@
-# Book of Genesis -- Bible, King James -- 2013-08-25 -- CreateSpace Independent Publishing Platform -- 9781492243762 -- 9114d6edb0a15e87d800c223d4ca97bf -- Anna’s Archive
-
+# Book of Genesis -- Bible, King James -- 2013-08-25 -- CreateSpace Independent Publishing Platform
 BOOK  OF
 GENESIS
 
