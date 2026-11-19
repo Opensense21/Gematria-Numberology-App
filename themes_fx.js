@@ -277,8 +277,20 @@
       });
     }
 
-    // 2. Theme Switcher Pill (Top-Left)
-    if (!header.querySelector('.theme-switcher')) {
+    // 2. Top Controls Bar (Theme Switcher Left + Language Toggle Right)
+    let topBar = header.querySelector('.header-top-controls');
+    if (!topBar) {
+      topBar = document.createElement('div');
+      topBar.className = 'header-top-controls';
+      const ambientLayer = header.querySelector('.header-ambient-layer');
+      if (ambientLayer && ambientLayer.nextSibling) {
+        header.insertBefore(topBar, ambientLayer.nextSibling);
+      } else {
+        header.prepend(topBar);
+      }
+    }
+
+    if (!topBar.querySelector('.theme-switcher')) {
       const switcher = document.createElement('div');
       switcher.className = 'theme-switcher';
       switcher.setAttribute('role', 'group');
@@ -289,13 +301,18 @@
         <button type="button" class="theme-btn" data-theme-opt="zelda" title="Zelda: Ocarina of Time">${SVGS.ocarinaIcon}<span>Hyrule</span></button>
         <button type="button" class="theme-btn" data-theme-opt="classic" title="Classic Cream"><span>Classic</span></button>
       `;
-      header.appendChild(switcher);
+      topBar.appendChild(switcher);
 
       switcher.querySelectorAll('.theme-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
           applyTheme(btn.getAttribute('data-theme-opt'), e);
         });
       });
+    }
+
+    const langToggle = header.querySelector('.lang-toggle');
+    if (langToggle && langToggle.parentElement !== topBar) {
+      topBar.appendChild(langToggle);
     }
 
     // 3. Interactive Collectible Sticker Shelf

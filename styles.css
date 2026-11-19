@@ -803,15 +803,20 @@ code {
   font-size: 0.86em;
 }
 
-/* Top-Level 2-Tab App Switcher */
+/* Top-Level App Switcher */
 .app-switcher {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
   background: var(--bg-surface);
   border: 1px solid var(--border-hairline);
-  border-radius: 999px;
-  padding: 4px;
+  border-radius: 20px;
+  padding: 5px;
   gap: 4px;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
   box-shadow: var(--shadow-soft);
 }
 
@@ -819,10 +824,10 @@ code {
   background: transparent;
   color: var(--ink-secondary);
   border: none;
-  padding: 0.6rem 1.25rem;
+  padding: 0.55rem 1.05rem;
   border-radius: 999px;
   font-family: var(--font-sans);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s;
@@ -1093,11 +1098,13 @@ code {
   }
   .app-switcher {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
+    border-radius: 16px;
   }
   .app-tab-btn {
-    flex: 1;
-    padding: 0.55rem 0.65rem;
+    flex: 1 1 auto;
+    padding: 0.5rem 0.75rem;
     font-size: 0.8rem;
   }
 }
