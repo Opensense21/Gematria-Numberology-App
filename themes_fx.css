@@ -422,10 +422,32 @@ html[data-theme="mashup"] .cipher-card:hover {
   box-shadow: 0 8px 28px rgba(246, 201, 69, 0.22), 0 0 14px rgba(255, 62, 165, 0.16);
 }
 
+/* Dark-theme native controls (date/time pickers, scrollbars) & surface depth */
+html[data-theme="gta6"],
+html[data-theme="zelda"],
+html[data-theme="mashup"] {
+  color-scheme: dark;
+}
+
+html[data-theme="gta6"] .cipher-console,
+html[data-theme="zelda"] .cipher-console,
+html[data-theme="mashup"] .cipher-console,
+html[data-theme="gta6"] .sacred-card,
+html[data-theme="zelda"] .sacred-card,
+html[data-theme="mashup"] .sacred-card,
+html[data-theme="gta6"] .kpi-card:not(.main-point),
+html[data-theme="zelda"] .kpi-card:not(.main-point),
+html[data-theme="mashup"] .kpi-card:not(.main-point) {
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 /* Dark-theme input & code block readability fixes */
 html[data-theme="gta6"] .cipher-input,
 html[data-theme="zelda"] .cipher-input,
 html[data-theme="mashup"] .cipher-input,
+html[data-theme="gta6"] .birth-input,
+html[data-theme="zelda"] .birth-input,
+html[data-theme="mashup"] .birth-input,
 html[data-theme="gta6"] .input-field,
 html[data-theme="zelda"] .input-field,
 html[data-theme="mashup"] .input-field,
