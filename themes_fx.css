@@ -1,0 +1,551 @@
+/* ==========================================================================
+   ARITHMOS HO THEOS — GTA 6 (Vice Neon) × Zelda: Ocarina of Time Theme & FX
+   ========================================================================== */
+
+/* ---- Theme Switcher Bar (Top-Left of Header) ---- */
+.theme-switcher {
+  position: absolute;
+  top: 1rem;
+  left: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-cream);
+  border: 1px solid var(--border-hairline);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 3px;
+  z-index: 20;
+  box-shadow: var(--shadow-soft);
+}
+
+.theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  background: transparent;
+  color: var(--ink-muted);
+  border: none;
+  padding: 0.28rem 0.68rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  transition: transform 0.18s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-btn:hover {
+  color: var(--ink-black);
+  transform: translateY(-1px);
+}
+
+.theme-btn.active {
+  background: var(--ink-black);
+  color: var(--bg-cream);
+}
+
+.theme-btn svg {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+/* ---- Tab Icons ---- */
+.app-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tab-svg-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.app-tab-btn:hover .tab-svg-icon {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+.app-tab-btn.active .tab-svg-icon {
+  transform: scale(1.12);
+}
+
+/* ---- Header Ambient Stickers ---- */
+.sacred-header {
+  overflow: hidden;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+
+.header-ambient-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.sacred-header > *:not(.header-ambient-layer) {
+  position: relative;
+  z-index: 5;
+}
+
+.ambient-sticker {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease, opacity 0.35s ease;
+  user-select: none;
+}
+
+.ambient-sticker-left {
+  left: max(1.25rem, 4vw);
+  top: 52%;
+  transform: translateY(-50%);
+  animation: floatStickerLeft 5.6s ease-in-out infinite;
+}
+
+.ambient-sticker-right {
+  right: max(1.25rem, 4vw);
+  top: 52%;
+  transform: translateY(-50%);
+  animation: floatStickerRight 5.2s ease-in-out infinite;
+}
+
+.ambient-sticker:hover {
+  transform: translateY(-54%) scale(1.12) rotate(-3deg);
+}
+
+.ambient-sticker:active {
+  transform: translateY(-48%) scale(0.94);
+}
+
+/* ---- Interactive Collectible Sticker Bar ---- */
+.sticker-shelf {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 1rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-hairline);
+  backdrop-filter: blur(8px);
+}
+
+.sticker-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  padding: 0.28rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface);
+  color: var(--ink-black);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.sticker-chip svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.sticker-chip:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: var(--shadow-hover);
+}
+
+.sticker-chip.popped {
+  animation: stickerPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Floating Toast when clicking Navi / Stickers */
+.fx-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.68rem 1.05rem;
+  border-radius: 14px;
+  background: var(--bg-surface);
+  color: var(--ink-black);
+  border: 1px solid var(--accent-main);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  font-size: 0.84rem;
+  font-weight: 600;
+  animation: toastSlideIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), toastFadeOut 0.35s ease 2.2s forwards;
+  pointer-events: none;
+}
+
+/* Click Sparkle Particles */
+.fx-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform, opacity;
+  animation: particleBurst 0.68s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Smooth Tab Reveal & Card Hover Polish */
+.app-workspace.active {
+  animation: panelReveal 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.sacred-card,
+.cs-chapter-card,
+.kpi-card,
+.cipher-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.3s ease;
+}
+
+.cs-chapter-card:hover,
+.kpi-card:hover,
+.cipher-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Hide game stickers in Classic Cream mode */
+html[data-theme="classic"] .ambient-sticker,
+html[data-theme="classic"] .sticker-shelf {
+  display: none;
+}
+
+/* ==========================================================================
+   THEME 1: GTA 6 — VICE NEON SUNSET (data-theme="gta6")
+   ========================================================================== */
+html[data-theme="gta6"] {
+  --bg-cream: #0e081a;
+  --bg-surface: #170f29;
+  --bg-subtle: #21153a;
+  --bg-hover: #2d1d4d;
+  --ink-black: #fdf4ff;
+  --ink-secondary: #d7c3ec;
+  --ink-muted: #a48ec4;
+  --border-hairline: rgba(255, 62, 165, 0.28);
+  --border-strong: #00f0ff;
+  --accent-main: #ff3ea5;
+  --accent-soft: rgba(255, 62, 165, 0.16);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.38);
+  --shadow-hover: 0 10px 30px rgba(255, 62, 165, 0.26), 0 0 18px rgba(0, 240, 255, 0.16);
+}
+
+html[data-theme="gta6"] body {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 62, 165, 0.16), transparent 40%),
+    radial-gradient(circle at 85% 15%, rgba(0, 240, 255, 0.14), transparent 42%),
+    linear-gradient(180deg, #0e081a 0%, #140a24 55%, #0c0717 100%);
+}
+
+html[data-theme="gta6"] .sacred-header {
+  background: linear-gradient(135deg, #1b0b33 0%, #2b1047 50%, #141a3a 100%);
+  border-bottom: 1px solid rgba(255, 62, 165, 0.4);
+  box-shadow: 0 6px 32px rgba(255, 62, 165, 0.14);
+}
+
+html[data-theme="gta6"] .sacred-title {
+  background: linear-gradient(90deg, #ffb84d 0%, #ff3ea5 52%, #00f0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 16px rgba(255, 62, 165, 0.35));
+}
+
+html[data-theme="gta6"] .app-tab-btn.active,
+html[data-theme="gta6"] .btn-primary,
+html[data-theme="gta6"] .theme-btn.active,
+html[data-theme="gta6"] .lang-btn.active {
+  background: linear-gradient(135deg, #ff3ea5 0%, #ff7a45 55%, #ffb84d 100%);
+  color: #140822;
+  border-color: transparent;
+  box-shadow: 0 0 18px rgba(255, 62, 165, 0.45);
+}
+
+html[data-theme="gta6"] .cs-chapter-card:hover,
+html[data-theme="gta6"] .kpi-card:hover,
+html[data-theme="gta6"] .cipher-card:hover {
+  border-color: #00f0ff;
+  box-shadow: 0 8px 26px rgba(0, 240, 255, 0.22);
+}
+
+/* ==========================================================================
+   THEME 2: ZELDA — OCARINA OF TIME (data-theme="zelda")
+   ========================================================================== */
+html[data-theme="zelda"] {
+  --bg-cream: #081316;
+  --bg-surface: #0e2026;
+  --bg-subtle: #142b33;
+  --bg-hover: #1b3842;
+  --ink-black: #f5f1df;
+  --ink-secondary: #cdd8cf;
+  --ink-muted: #8ea8a6;
+  --border-hairline: rgba(246, 201, 69, 0.28);
+  --border-strong: #f6c945;
+  --accent-main: #f6c945;
+  --accent-soft: rgba(246, 201, 69, 0.14);
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.42);
+  --shadow-hover: 0 10px 28px rgba(246, 201, 69, 0.22), 0 0 18px rgba(88, 242, 255, 0.16);
+}
+
+html[data-theme="zelda"] body {
+  background:
+    radial-gradient(circle at 20% 8%, rgba(47, 217, 128, 0.13), transparent 40%),
+    radial-gradient(circle at 82% 14%, rgba(88, 242, 255, 0.13), transparent 42%),
+    linear-gradient(180deg, #081316 0%, #0b1c22 55%, #071014 100%);
+}
+
+html[data-theme="zelda"] .sacred-header {
+  background: linear-gradient(135deg, #0b1d24 0%, #102a27 52%, #0c1f2e 100%);
+  border-bottom: 1px solid rgba(246, 201, 69, 0.42);
+  box-shadow: 0 6px 32px rgba(246, 201, 69, 0.12);
+}
+
+html[data-theme="zelda"] .sacred-title {
+  background: linear-gradient(90deg, #fff3b0 0%, #f6c945 50%, #58f2ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 14px rgba(246, 201, 69, 0.35));
+}
+
+html[data-theme="zelda"] .app-tab-btn.active,
+html[data-theme="zelda"] .btn-primary,
+html[data-theme="zelda"] .theme-btn.active,
+html[data-theme="zelda"] .lang-btn.active {
+  background: linear-gradient(135deg, #f6c945 0%, #d49b1a 100%);
+  color: #09161a;
+  border-color: transparent;
+  box-shadow: 0 0 18px rgba(246, 201, 69, 0.42);
+}
+
+html[data-theme="zelda"] .cs-chapter-card:hover,
+html[data-theme="zelda"] .kpi-card:hover,
+html[data-theme="zelda"] .cipher-card:hover {
+  border-color: #58f2ff;
+  box-shadow: 0 8px 26px rgba(88, 242, 255, 0.22);
+}
+
+/* ==========================================================================
+   THEME 3: MASHUP — GTA 6 VICE NEON × ZELDA OCARINA OF TIME (data-theme="mashup")
+   ========================================================================== */
+html[data-theme="mashup"] {
+  --bg-cream: #0c0b1d;
+  --bg-surface: #14122b;
+  --bg-subtle: #1d1a3d;
+  --bg-hover: #272252;
+  --ink-black: #faf5ff;
+  --ink-secondary: #d8d0ef;
+  --ink-muted: #9f96c4;
+  --border-hairline: rgba(246, 201, 69, 0.26);
+  --border-strong: #ff3ea5;
+  --accent-main: #f6c945;
+  --accent-soft: rgba(246, 201, 69, 0.14);
+  --shadow-soft: 0 4px 22px rgba(0, 0, 0, 0.42);
+  --shadow-hover: 0 10px 30px rgba(255, 62, 165, 0.22), 0 0 20px rgba(88, 242, 255, 0.18);
+}
+
+html[data-theme="mashup"] body {
+  background:
+    radial-gradient(circle at 12% 10%, rgba(255, 62, 165, 0.16), transparent 38%),
+    radial-gradient(circle at 88% 12%, rgba(88, 242, 255, 0.16), transparent 40%),
+    radial-gradient(circle at 50% 0%, rgba(246, 201, 69, 0.10), transparent 36%),
+    linear-gradient(180deg, #0c0b1d 0%, #121029 55%, #090816 100%);
+}
+
+html[data-theme="mashup"] .sacred-header {
+  background: linear-gradient(135deg, #1c0d36 0%, #16183b 48%, #0e2430 100%);
+  border-bottom: 1px solid rgba(246, 201, 69, 0.38);
+  box-shadow: 0 8px 34px rgba(255, 62, 165, 0.14);
+}
+
+html[data-theme="mashup"] .sacred-title {
+  background: linear-gradient(90deg, #ff3ea5 0%, #f6c945 50%, #58f2ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 18px rgba(246, 201, 69, 0.30));
+}
+
+html[data-theme="mashup"] .app-tab-btn.active,
+html[data-theme="mashup"] .btn-primary,
+html[data-theme="mashup"] .theme-btn.active,
+html[data-theme="mashup"] .lang-btn.active {
+  background: linear-gradient(135deg, #ff3ea5 0%, #f6c945 55%, #58f2ff 100%);
+  color: #0d0a1f;
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(255, 62, 165, 0.38);
+}
+
+html[data-theme="mashup"] .cs-chapter-card:hover,
+html[data-theme="mashup"] .kpi-card:hover,
+html[data-theme="mashup"] .cipher-card:hover {
+  border-color: #f6c945;
+  box-shadow: 0 8px 28px rgba(246, 201, 69, 0.22), 0 0 14px rgba(255, 62, 165, 0.16);
+}
+
+/* Dark-theme input & code block readability fixes */
+html[data-theme="gta6"] .cipher-input,
+html[data-theme="zelda"] .cipher-input,
+html[data-theme="mashup"] .cipher-input,
+html[data-theme="gta6"] .input-field,
+html[data-theme="zelda"] .input-field,
+html[data-theme="mashup"] .input-field,
+html[data-theme="gta6"] select,
+html[data-theme="zelda"] select,
+html[data-theme="mashup"] select {
+  background: var(--bg-subtle);
+  color: var(--ink-black);
+  border-color: var(--border-hairline);
+}
+
+html[data-theme="gta6"] .cipher-input::placeholder,
+html[data-theme="zelda"] .cipher-input::placeholder,
+html[data-theme="mashup"] .cipher-input::placeholder {
+  color: var(--ink-muted);
+}
+
+/* Dark-theme code blocks & button hover fixes across all tabs (CS249r, AI Agents, Agentic Skills, MarkItDown, Numerology) */
+html[data-theme="gta6"] .cs-code,
+html[data-theme="zelda"] .cs-code,
+html[data-theme="mashup"] .cs-code {
+  background: rgba(5, 4, 14, 0.88);
+  color: #f4f1ff;
+  border: 1px solid var(--border-hairline);
+}
+
+html[data-theme="gta6"] .btn-primary:hover {
+  background: linear-gradient(135deg, #ff5eb4 0%, #ff8f5c 55%, #ffd070 100%);
+  box-shadow: 0 0 24px rgba(255, 62, 165, 0.65);
+}
+
+html[data-theme="zelda"] .btn-primary:hover {
+  background: linear-gradient(135deg, #ffe07d 0%, #f6c945 100%);
+  box-shadow: 0 0 24px rgba(246, 201, 69, 0.65);
+}
+
+html[data-theme="mashup"] .btn-primary:hover {
+  background: linear-gradient(135deg, #ff5eb4 0%, #ffe07d 55%, #80f7ff 100%);
+  box-shadow: 0 0 26px rgba(246, 201, 69, 0.55), 0 0 18px rgba(255, 62, 165, 0.45);
+}
+
+/* Harmonize Three-Body Problem tab shell with active theme */
+html[data-theme="zelda"] .tb-shell {
+  border-color: rgba(246, 201, 69, 0.35);
+  box-shadow: 0 18px 42px rgba(4, 15, 18, 0.45), 0 0 20px rgba(246, 201, 69, 0.08);
+}
+
+html[data-theme="gta6"] .tb-shell {
+  border-color: rgba(255, 62, 165, 0.42);
+  box-shadow: 0 18px 42px rgba(14, 6, 24, 0.5), 0 0 22px rgba(255, 62, 165, 0.14);
+}
+
+/* ---- Keyframes ---- */
+@keyframes floatStickerLeft {
+  0%, 100% { transform: translateY(-50%) translateY(0px) rotate(-2deg); }
+  50% { transform: translateY(-50%) translateY(-9px) rotate(2deg); }
+}
+
+@keyframes floatStickerRight {
+  0%, 100% { transform: translateY(-50%) translateY(0px) rotate(2deg); }
+  50% { transform: translateY(-50%) translateY(-10px) rotate(-3deg); }
+}
+
+@keyframes naviWingFlutter {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(0.65); }
+}
+
+@keyframes triforceGlow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(246, 201, 69, 0.55)); }
+  50% { filter: drop-shadow(0 0 16px rgba(246, 201, 69, 0.95)); }
+}
+
+@keyframes neonPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 62, 165, 0.55)); }
+  50% { filter: drop-shadow(0 0 16px rgba(0, 240, 255, 0.9)); }
+}
+
+@keyframes panelReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stickerPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22) rotate(-5deg); }
+  75% { transform: scale(0.95) rotate(2deg); }
+  100% { transform: scale(1); }
+}
+
+@keyframes particleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) translate(0, 0) scale(0.7) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) scale(1.15) rotate(var(--rot));
+  }
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.94); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes toastFadeOut {
+  to { opacity: 0; transform: translateY(8px); }
+}
+
+.svg-triforce-glow {
+  animation: triforceGlow 3.2s ease-in-out infinite;
+}
+
+.svg-neon-pulse {
+  animation: neonPulse 3.4s ease-in-out infinite;
+}
+
+.svg-navi-wings {
+  transform-origin: center;
+  animation: naviWingFlutter 0.28s ease-in-out infinite;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .ambient-sticker {
+    display: none;
+  }
+  .theme-switcher {
+    position: static;
+    margin: 0 auto 0.85rem;
+  }
+  .lang-toggle {
+    top: 0.75rem;
+    right: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-sticker,
+  .svg-triforce-glow,
+  .svg-neon-pulse,
+  .svg-navi-wings,
+  .app-workspace.active,
+  .fx-particle {
+    animation: none !important;
+    transition: none !important;
+  }
+}
